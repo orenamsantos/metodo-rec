@@ -369,6 +369,68 @@ export default function Offer({ onBuy }) {
             </div>
           </FadeIn>
 
+          {/* ============ PROVA SOCIAL — PRINTS ============ */}
+          <FadeIn delay={0.35}>
+            <div style={{ padding: '48px 0' }}>
+              <div style={{
+                fontFamily: "'Fraunces', serif", fontStyle: 'italic',
+                color: goldText, fontSize: 13, letterSpacing: '0.15em', textTransform: 'uppercase',
+                marginBottom: 10, textAlign: 'center',
+              }}>
+                Pruebas Reales
+              </div>
+              <h3 style={{
+                fontFamily: "'Fraunces', serif", fontWeight: 400,
+                fontSize: 'clamp(24px, 5.5vw, 30px)', lineHeight: 1.2,
+                textAlign: 'center', margin: '0 0 28px', color: c.text,
+                letterSpacing: '-0.01em',
+              }}>
+                <Em>Lo que están diciendo</Em>
+              </h3>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
+                  gap: 16,
+                  maxWidth: 720,
+                  margin: '0 auto',
+                }}
+              >
+                {SOCIAL_PROOF_PRINTS.map((p) => (
+                  <div
+                    key={p.src}
+                    style={{
+                      aspectRatio: '9 / 16',
+                      maxHeight: 600,
+                      background: isLight ? c.bgWarm : c.bgSoft,
+                      border: `1px solid ${c.borderSoft}`,
+                      borderRadius: isLight ? 8 : 2,
+                      overflow: 'hidden',
+                      boxShadow: isLight ? `0 4px 12px ${c.shadow}15` : `0 4px 16px rgba(0,0,0,0.3)`,
+                    }}
+                  >
+                    <img
+                      src={p.src}
+                      alt={p.alt}
+                      loading="lazy"
+                      style={{
+                        width: '100%', height: '100%',
+                        objectFit: 'contain', display: 'block',
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+              <p style={{
+                marginTop: 18, textAlign: 'center',
+                fontFamily: "'Fraunces', serif", fontStyle: 'italic',
+                fontSize: 12, color: c.textDim, lineHeight: 1.5,
+              }}>
+                Capturas compartidas con autorización. Nombres modificados para proteger la identidad.
+              </p>
+            </div>
+          </FadeIn>
+
           {/* ============ CAIXA DE PREÇO PREMIUM ============ */}
           <FadeIn delay={0.4}>
             <div style={{
