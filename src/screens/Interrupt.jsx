@@ -1,9 +1,10 @@
-import { c } from '../theme';
+import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import PrimaryButton from '../components/PrimaryButton';
 import Em from '../components/Em';
 
 export default function Interrupt({ onNext }) {
+  const { c } = useTheme();
   return (
     <div style={{
       paddingTop: '15vh', minHeight: '70vh', display: 'flex',

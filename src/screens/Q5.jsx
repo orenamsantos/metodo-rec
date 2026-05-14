@@ -11,6 +11,7 @@ const OPTIONS = [
 ];
 
 export default function Q5({ v, onSel }) {
+  const { c } = useTheme();
   return (
     <div style={{ paddingTop: 24 }}>
       <ScreenTitle eyebrow="Pregunta 05 · La última">

@@ -1,5 +1,8 @@
-import { c } from '../theme';
+import { useTheme } from '../ThemeContext';
 
 export default function Em({ children }) {
-  return <em style={{ color: c.gold, fontStyle: 'italic' }}>{children}</em>;
+  const { c, isLight } = useTheme();
+  return (
+    <em style={{ color: isLight ? c.goldDeep : c.gold, fontStyle: 'italic' }}>{children}</em>
+  );
 }
