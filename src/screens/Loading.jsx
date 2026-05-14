@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { c } from '../theme';
+import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import Em from '../components/Em';
 
@@ -11,6 +11,7 @@ const STEPS = [
 ];
 
 export default function Loading() {
+  const { c } = useTheme();
   const [step, setStep] = useState(0);
 
   useEffect(() => {

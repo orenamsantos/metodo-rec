@@ -1,4 +1,4 @@
-import { c } from '../theme';
+import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import OptionCard from '../components/OptionCard';
 import PrimaryButton from '../components/PrimaryButton';
@@ -16,6 +16,7 @@ const OPTIONS = [
 ];
 
 export default function Q2({ sel, onTog, onNext }) {
+  const { c } = useTheme();
   return (
     <div style={{ paddingTop: 24 }}>
       <ScreenTitle eyebrow="Pregunta 02">

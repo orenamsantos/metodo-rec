@@ -1,9 +1,10 @@
-import { c } from '../theme';
+import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import PrimaryButton from '../components/PrimaryButton';
 import Em from '../components/Em';
 
 export default function Checkout({ onComplete }) {
+  const { c } = useTheme();
   return (
     <div style={{ paddingTop: 24 }}>
       <FadeIn>

@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router-dom';
-import { c } from '../theme';
+import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import BuyButton from '../components/BuyButton';
 import GhostButton from '../components/GhostButton';
 import Em from '../components/Em';
 
 export default function Downsell() {
+  const { c } = useTheme();
   const navigate = useNavigate();
   const goAcceso = () => navigate('/acceso');
 

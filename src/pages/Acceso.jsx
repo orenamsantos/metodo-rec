@@ -1,8 +1,9 @@
-import { c } from '../theme';
+import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import Em from '../components/Em';
 
 export default function Acceso() {
+  const { c } = useTheme();
   return (
     <div style={{ paddingTop: '8vh', textAlign: 'center' }}>
       <FadeIn>

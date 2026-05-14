@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { c } from '../theme';
+import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import BuyButton from '../components/BuyButton';
 import Em from '../components/Em';
@@ -24,7 +24,125 @@ const TESTIMONIALS = [
   { quote: 'El método es diferente. No es "darle espacio" ni "valorarte". Es algo que nadie habla en otro lado.', author: 'Leticia M.', meta: 'Casada hace 6 años · Argentina' },
 ];
 
+function CornerOrnaments({ color }) {
+  return (
+    <>
+      {[
+        { top: 12, left: 12 },
+        { top: 12, right: 12 },
+        { bottom: 12, left: 12 },
+        { bottom: 12, right: 12 },
+      ].map((pos, i) => (
+        <div
+          key={i}
+          style={{
+            position: 'absolute',
+            ...pos,
+            width: 20,
+            height: 20,
+            borderTop: pos.top !== undefined ? `1.5px solid ${color}` : 'none',
+            borderBottom: pos.bottom !== undefined ? `1.5px solid ${color}` : 'none',
+            borderLeft: pos.left !== undefined ? `1.5px solid ${color}` : 'none',
+            borderRight: pos.right !== undefined ? `1.5px solid ${color}` : 'none',
+            opacity: 0.6,
+            pointerEvents: 'none',
+          }}
+        />
+      ))}
+    </>
+  );
+}
+
+function GuaranteeSeal({ c, isLight }) {
+  const ringColor = isLight ? c.goldDeep : c.gold;
+  const innerBg = isLight ? c.bgWarm : `${c.gold}10`;
+  return (
+    <div
+      style={{
+        position: 'relative',
+        width: 'clamp(120px, 28vw, 140px)',
+        height: 'clamp(120px, 28vw, 140px)',
+        flexShrink: 0,
+      }}
+    >
+      {/* Anel externo decorativo */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          borderRadius: '50%',
+          border: `2px solid ${ringColor}`,
+          opacity: 0.4,
+        }}
+      />
+      {/* Anel interno */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 8,
+          borderRadius: '50%',
+          border: `1px solid ${ringColor}`,
+          background: `radial-gradient(circle, ${innerBg} 0%, transparent 80%)`,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: isLight
+            ? `0 4px 16px ${c.shadow}15, inset 0 1px 2px rgba(255,255,255,0.5)`
+            : `0 0 24px ${c.gold}40, inset 0 0 12px ${c.gold}20`,
+        }}
+      >
+        <div
+          style={{
+            fontFamily: "'Fraunces', serif",
+            fontSize: 'clamp(34px, 8vw, 40px)',
+            fontWeight: 400,
+            color: isLight ? c.goldDeep : c.goldBright,
+            lineHeight: 1,
+            letterSpacing: '-0.02em',
+          }}
+        >
+          30
+        </div>
+        <div
+          style={{
+            fontSize: 9,
+            letterSpacing: '0.3em',
+            textTransform: 'uppercase',
+            color: isLight ? c.goldDeep : c.gold,
+            fontWeight: 600,
+            marginTop: 2,
+          }}
+        >
+          días
+        </div>
+        <div
+          style={{
+            width: 22,
+            height: 1,
+            background: ringColor,
+            margin: '6px 0 4px',
+            opacity: 0.5,
+          }}
+        />
+        <div
+          style={{
+            fontFamily: "'Fraunces', serif",
+            fontStyle: 'italic',
+            fontSize: 11,
+            color: c.textSoft,
+            letterSpacing: '0.05em',
+          }}
+        >
+          garantía
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Offer({ onBuy }) {
+  const { c, isLight } = useTheme();
   const [revealed, setRevealed] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setRevealed(true), REVEAL_DELAY_MS);
@@ -34,12 +152,17 @@ export default function Offer({ onBuy }) {
   const stack = ITEMS.reduce((sum, it) => sum + parseInt(it.value.replace(/\D/g, ''), 10), 0);
   const price = 27;
 
+  const goldText = isLight ? c.goldDeep : c.gold;
+  const priceGradient = isLight
+    ? `linear-gradient(135deg, ${c.goldDeep} 0%, ${c.goldBright} 35%, #f6d8a3 50%, ${c.goldBright} 65%, ${c.goldDeep} 100%)`
+    : `linear-gradient(135deg, ${c.goldDeep} 0%, ${c.goldBright} 45%, ${c.gold} 55%, ${c.goldDeep} 100%)`;
+
   return (
     <div style={{ paddingTop: 24 }}>
       <FadeIn>
         <div style={{
           fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase',
-          color: c.gold, fontWeight: 500, marginBottom: 14, textAlign: 'center',
+          color: goldText, fontWeight: 600, marginBottom: 14, textAlign: 'center',
         }}>
           Tu Plan · Método R.E.C.
         </div>
@@ -48,31 +171,39 @@ export default function Offer({ onBuy }) {
         <h1 style={{
           fontFamily: "'Fraunces', serif", fontSize: 'clamp(28px, 6vw, 36px)',
           fontWeight: 400, lineHeight: 1.15, textAlign: 'center',
-          margin: '0 0 28px', letterSpacing: '-0.015em',
+          margin: '0 0 28px', letterSpacing: '-0.015em', color: c.text,
         }}>
           El camino para mujeres en <Em>Zona Crítica</Em>
         </h1>
       </FadeIn>
+
+      {/* VSL placeholder */}
       <FadeIn delay={0.2}>
         <div style={{
           position: 'relative', width: '100%', aspectRatio: '16 / 9',
-          background: `linear-gradient(180deg, #3a2820 0%, #241813 100%)`,
+          background: isLight
+            ? `linear-gradient(180deg, ${c.bgDeep} 0%, ${c.bgSoft} 100%)`
+            : `linear-gradient(180deg, #3a2820 0%, #241813 100%)`,
           border: `1px solid ${c.border}`,
+          borderRadius: isLight ? 8 : 2,
           display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: 'center',
           cursor: 'pointer', marginBottom: 24,
+          boxShadow: isLight ? `0 12px 32px ${c.shadow}18` : 'none',
+          overflow: 'hidden',
         }}>
           <div style={{
             width: 72, height: 72, borderRadius: '50%',
-            border: `2px solid ${c.gold}`,
+            border: `2px solid ${goldText}`,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            marginBottom: 14, background: `${c.gold}15`,
+            marginBottom: 14, background: `${c.gold}20`,
           }}>
-            <span style={{ color: c.gold, fontSize: 26, marginLeft: 4 }}>▶</span>
+            <span style={{ color: goldText, fontSize: 26, marginLeft: 4 }}>▶</span>
           </div>
           <div style={{
             fontFamily: "'Fraunces', serif", fontStyle: 'italic',
-            color: c.goldBright, fontSize: 13, letterSpacing: '0.1em', marginBottom: 4,
+            color: isLight ? c.goldDeep : c.goldBright,
+            fontSize: 13, letterSpacing: '0.1em', marginBottom: 4,
           }}>
             [ VSL DE OFERTA ]
           </div>
@@ -87,11 +218,12 @@ export default function Offer({ onBuy }) {
           <div style={{
             padding: '32px 24px', textAlign: 'center',
             background: c.bgSoft, border: `1px solid ${c.borderSoft}`,
+            borderRadius: isLight ? 8 : 2,
             marginBottom: 20,
           }}>
             <div style={{
               fontFamily: "'Fraunces', serif", fontStyle: 'italic',
-              fontSize: 17, color: c.gold, marginBottom: 10, lineHeight: 1.4,
+              fontSize: 17, color: goldText, marginBottom: 10, lineHeight: 1.4,
             }}>
               Mira el video hasta el final.
             </div>
@@ -101,7 +233,7 @@ export default function Offer({ onBuy }) {
             <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center', gap: 6 }}>
               {[0, 1, 2].map((i) => (
                 <div key={i} style={{
-                  width: 6, height: 6, borderRadius: '50%', background: c.gold,
+                  width: 6, height: 6, borderRadius: '50%', background: goldText,
                   animation: `pulse 1.4s ease-in-out ${i * 0.2}s infinite`,
                 }} />
               ))}
@@ -112,10 +244,11 @@ export default function Offer({ onBuy }) {
 
       {revealed && (
         <>
+          {/* Lista de itens */}
           <FadeIn>
             <h2 style={{
               fontFamily: "'Fraunces', serif", fontSize: 22, fontWeight: 500,
-              margin: '24px 0 20px', letterSpacing: '-0.01em',
+              margin: '24px 0 20px', letterSpacing: '-0.01em', color: c.text,
             }}>
               Lo que recibes hoy:
             </h2>
@@ -124,17 +257,17 @@ export default function Offer({ onBuy }) {
             <div style={{ marginBottom: 24 }}>
               {ITEMS.map((item, i) => (
                 <div key={i} style={{
-                  display: 'flex', gap: 14, padding: '16px 0',
+                  display: 'flex', gap: 14, padding: '18px 0',
                   borderBottom: i < ITEMS.length - 1 ? `1px solid ${c.borderSoft}` : 'none',
                 }}>
                   <div style={{
                     fontFamily: "'Fraunces', serif", fontStyle: 'italic',
-                    fontSize: 13, color: c.gold, flexShrink: 0, width: 24, paddingTop: 2,
+                    fontSize: 13, color: goldText, flexShrink: 0, width: 24, paddingTop: 2,
                   }}>
                     {String(i + 1).padStart(2, '0')}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 4 }}>{item.title}</div>
+                    <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 4, color: c.text }}>{item.title}</div>
                     <div style={{ fontSize: 13, color: c.textSoft, lineHeight: 1.55 }}>{item.desc}</div>
                   </div>
                   <div style={{ fontSize: 12, color: c.textDim, textDecoration: 'line-through', flexShrink: 0 }}>
@@ -147,9 +280,14 @@ export default function Offer({ onBuy }) {
           <FadeIn delay={0.2}>
             <div style={{
               padding: '16px 20px',
-              background: `linear-gradient(90deg, ${c.bgDeep} 0%, ${c.bgSoft} 100%)`,
-              border: `1px solid ${c.borderSoft}`, borderLeft: `2px solid ${c.danger}`,
-              marginBottom: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              background: isLight
+                ? `linear-gradient(90deg, ${c.bgWarm} 0%, ${c.bgSoft} 100%)`
+                : `linear-gradient(90deg, ${c.bgDeep} 0%, ${c.bgSoft} 100%)`,
+              border: `1px solid ${c.borderSoft}`,
+              borderLeft: `3px solid ${c.danger}`,
+              borderRadius: isLight ? 4 : 0,
+              marginBottom: 32,
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
             }}>
               <div style={{ fontSize: 12, color: c.textSoft, letterSpacing: '0.15em', textTransform: 'uppercase' }}>
                 Valor total
@@ -163,41 +301,49 @@ export default function Offer({ onBuy }) {
               </div>
             </div>
           </FadeIn>
+
+          {/* Depoimentos */}
           <FadeIn delay={0.3}>
             <div style={{
               fontFamily: "'Fraunces', serif", fontStyle: 'italic',
-              color: c.gold, fontSize: 13, letterSpacing: '0.1em', textTransform: 'uppercase',
+              color: goldText, fontSize: 13, letterSpacing: '0.15em', textTransform: 'uppercase',
               marginBottom: 16, textAlign: 'center',
             }}>
               Quien ya aplicó
             </div>
-            <div style={{ marginBottom: 32 }}>
+            <div style={{ marginBottom: 36 }}>
               {TESTIMONIALS.map((t, i) => (
                 <div key={i} style={{
-                  padding: 20,
-                  background: i % 2 === 0
-                    ? `linear-gradient(135deg, ${c.bgWarm} 0%, ${c.bgSoft} 100%)`
-                    : `linear-gradient(135deg, ${c.bgSoft} 0%, ${c.bgDeep} 100%)`,
-                  border: `1px solid ${c.borderSoft}`, marginBottom: 12,
+                  padding: '22px 22px 18px',
+                  background: isLight
+                    ? (i % 2 === 0 ? c.bgWarm : c.bgSoft)
+                    : (i % 2 === 0
+                        ? `linear-gradient(135deg, ${c.bgWarm} 0%, ${c.bgSoft} 100%)`
+                        : `linear-gradient(135deg, ${c.bgSoft} 0%, ${c.bgDeep} 100%)`),
+                  border: `1px solid ${c.borderSoft}`,
+                  borderRadius: isLight ? 8 : 2,
+                  marginBottom: 12,
                   position: 'relative',
+                  boxShadow: isLight ? `0 4px 12px ${c.shadow}10` : 'none',
                 }}>
                   <div style={{
-                    position: 'absolute', top: 10, left: 16,
-                    fontFamily: "'Fraunces', serif", fontSize: 42,
-                    color: c.gold, opacity: 0.25, lineHeight: 0.5, fontStyle: 'italic',
+                    position: 'absolute', top: 8, left: 18,
+                    fontFamily: "'Fraunces', serif", fontSize: 48,
+                    color: goldText, opacity: 0.25, lineHeight: 0.5, fontStyle: 'italic',
                   }}>"</div>
                   <div style={{
                     fontFamily: "'Fraunces', serif", fontStyle: 'italic',
-                    fontSize: 15, lineHeight: 1.6, color: c.text, marginBottom: 14, paddingLeft: 14,
+                    fontSize: 15, lineHeight: 1.6, color: c.text, marginBottom: 16, paddingLeft: 16,
                   }}>
                     {t.quote}
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, paddingLeft: 14 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, paddingLeft: 16 }}>
                     <div style={{
-                      width: 32, height: 32, borderRadius: '50%',
+                      width: 34, height: 34, borderRadius: '50%',
                       background: `linear-gradient(135deg, ${c.gold} 0%, ${c.rose} 100%)`,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontFamily: "'Fraunces', serif", fontSize: 13, color: c.bg, fontWeight: 600,
+                      fontFamily: "'Fraunces', serif", fontSize: 14,
+                      color: isLight ? '#fffaf0' : c.bg, fontWeight: 600,
                     }}>{t.author[0]}</div>
                     <div>
                       <div style={{ fontSize: 13, color: c.text, fontWeight: 500 }}>{t.author}</div>
@@ -209,109 +355,133 @@ export default function Offer({ onBuy }) {
             </div>
           </FadeIn>
 
+          {/* ============ CAIXA DE PREÇO PREMIUM ============ */}
           <FadeIn delay={0.4}>
             <div style={{
               position: 'relative',
-              padding: '40px 28px 32px',
-              background: `radial-gradient(ellipse at top, ${c.gold}18 0%, transparent 60%), linear-gradient(180deg, ${c.bgWarm} 0%, ${c.bgDeep} 100%)`,
+              padding: 'clamp(36px, 9vw, 48px) clamp(22px, 6vw, 32px) clamp(28px, 7vw, 36px)',
+              background: isLight
+                ? `radial-gradient(ellipse at top, ${c.bgWarm} 0%, ${c.bg} 60%, ${c.bgSoft} 100%)`
+                : `radial-gradient(ellipse at top, ${c.gold}18 0%, transparent 60%), linear-gradient(180deg, ${c.bgWarm} 0%, ${c.bgDeep} 100%)`,
               border: `1px solid ${c.borderGold}`,
-              textAlign: 'center', marginBottom: 24,
-              boxShadow: `0 20px 60px ${c.shadow}cc, 0 0 80px ${c.gold}15, inset 0 1px 0 ${c.goldBright}30`,
+              borderRadius: isLight ? 12 : 2,
+              textAlign: 'center',
+              marginBottom: 28,
+              boxShadow: c.shadowPremium,
+              overflow: 'hidden',
             }}>
-              {[
-                { top: 10, left: 10 },
-                { top: 10, right: 10 },
-                { bottom: 10, left: 10 },
-                { bottom: 10, right: 10 },
-              ].map((pos, i) => (
-                <div key={i} style={{
+              {/* Borda interna sutil */}
+              <div
+                style={{
                   position: 'absolute',
-                  ...pos,
-                  width: 18, height: 18,
-                  borderTop: pos.top !== undefined ? `1px solid ${c.gold}` : 'none',
-                  borderBottom: pos.bottom !== undefined ? `1px solid ${c.gold}` : 'none',
-                  borderLeft: pos.left !== undefined ? `1px solid ${c.gold}` : 'none',
-                  borderRight: pos.right !== undefined ? `1px solid ${c.gold}` : 'none',
-                  opacity: 0.6,
-                }} />
-              ))}
+                  inset: 6,
+                  borderRadius: isLight ? 8 : 0,
+                  border: `1px solid ${c.borderGold}`,
+                  opacity: 0.3,
+                  pointerEvents: 'none',
+                }}
+              />
+              <CornerOrnaments color={goldText} />
 
+              {/* Linha decorativa superior */}
               <div style={{
+                position: 'relative',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                gap: 12, marginBottom: 16,
+                gap: 12, marginBottom: 18,
               }}>
-                <div style={{ height: 1, width: 32, background: `linear-gradient(90deg, transparent, ${c.gold})` }} />
-                <div style={{ color: c.gold, fontSize: 10 }}>✦</div>
-                <div style={{ height: 1, width: 32, background: `linear-gradient(90deg, ${c.gold}, transparent)` }} />
+                <div style={{ height: 1, width: 40, background: `linear-gradient(90deg, transparent, ${goldText})` }} />
+                <div style={{ color: goldText, fontSize: 11 }}>✦</div>
+                <div style={{ height: 1, width: 40, background: `linear-gradient(90deg, ${goldText}, transparent)` }} />
               </div>
 
               <div style={{
-                fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase',
-                color: c.gold, fontWeight: 600, marginBottom: 24,
+                position: 'relative',
+                fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase',
+                color: goldText, fontWeight: 700, marginBottom: 28,
               }}>
                 Oferta del Diagnóstico
               </div>
 
               <div style={{
-                fontSize: 13, color: c.textSoft, marginBottom: 4,
+                position: 'relative',
+                fontSize: 12, color: c.textSoft, marginBottom: 6,
                 fontFamily: "'Fraunces', serif", fontStyle: 'italic',
               }}>
                 De
               </div>
               <div style={{
+                position: 'relative',
                 fontFamily: "'Fraunces', serif", fontSize: 22, color: c.textSoft,
                 textDecoration: 'line-through', textDecorationColor: c.danger,
-                textDecorationThickness: 1.5, marginBottom: 18, fontStyle: 'italic',
+                textDecorationThickness: 1.5, marginBottom: 22, fontStyle: 'italic',
               }}>
                 ${stack}
               </div>
 
               <div style={{
-                fontSize: 12, color: c.gold, marginBottom: 8,
-                letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500,
+                position: 'relative',
+                fontSize: 11, color: goldText, marginBottom: 8,
+                letterSpacing: '0.25em', textTransform: 'uppercase', fontWeight: 600,
               }}>
                 Hoy, por solo
               </div>
 
-              <div style={{
-                fontFamily: "'Fraunces', serif",
-                fontSize: 'clamp(72px, 18vw, 92px)',
-                fontWeight: 400, lineHeight: 0.95,
-                marginBottom: 12, letterSpacing: '-0.04em',
-                background: `linear-gradient(135deg, ${c.goldDeep} 0%, ${c.goldBright} 45%, ${c.gold} 55%, ${c.goldDeep} 100%)`,
-                backgroundSize: '200% 200%',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                animation: 'price-shimmer 4s ease-in-out infinite',
-                filter: `drop-shadow(0 4px 20px ${c.gold}40)`,
-              }}>
-                ${price}
+              {/* PREÇO HERO */}
+              <div style={{ position: 'relative', display: 'inline-block', marginBottom: 12 }}>
+                <span
+                  style={{
+                    fontFamily: "'Fraunces', serif",
+                    fontSize: 'clamp(80px, 22vw, 110px)',
+                    fontWeight: 400,
+                    lineHeight: 0.95,
+                    letterSpacing: '-0.05em',
+                    background: priceGradient,
+                    backgroundSize: '200% 200%',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    animation: 'price-shimmer 4s ease-in-out infinite',
+                    filter: isLight
+                      ? `drop-shadow(0 6px 20px ${c.gold}55) drop-shadow(0 2px 4px ${c.shadow}20)`
+                      : `drop-shadow(0 4px 20px ${c.gold}50)`,
+                  }}
+                >
+                  ${price}
+                </span>
               </div>
 
-              <div style={{ fontSize: 13, color: c.textSoft, marginBottom: 8, fontStyle: 'italic', fontFamily: "'Fraunces', serif" }}>
+              <div style={{
+                position: 'relative',
+                fontSize: 13, color: c.textSoft, marginBottom: 10,
+                fontStyle: 'italic', fontFamily: "'Fraunces', serif",
+              }}>
                 o en 12 cuotas sin interés
               </div>
 
               <div style={{
+                position: 'relative',
                 display: 'inline-block',
-                padding: '6px 14px',
-                background: `${c.gold}15`,
-                border: `1px solid ${c.gold}40`,
-                fontSize: 11, color: c.goldGlow,
-                marginBottom: 28, letterSpacing: '0.04em',
+                padding: '8px 16px',
+                background: isLight ? `${c.gold}1a` : `${c.gold}15`,
+                border: `1px solid ${goldText}40`,
+                borderRadius: 999,
+                fontSize: 11, color: isLight ? c.goldDeep : c.goldGlow,
+                marginBottom: 30, letterSpacing: '0.05em',
               }}>
-                Equivale a <strong style={{ color: c.goldBright }}>menos del 25%</strong> de una sesión de terapia
+                Equivale a <strong style={{ color: isLight ? c.goldDeep : c.goldBright }}>menos del 25%</strong> de una sesión de terapia
               </div>
 
-              <BuyButton onClick={onBuy} subtitle="Acceso inmediato · Sin compromiso">
-                Acceder al Método
-              </BuyButton>
+              <div style={{ position: 'relative' }}>
+                <BuyButton onClick={onBuy} subtitle="Acceso inmediato · Sin compromiso">
+                  Acceder al Método
+                </BuyButton>
+              </div>
 
               <div style={{
+                position: 'relative',
                 marginTop: 24,
                 display: 'flex', justifyContent: 'center',
-                gap: 18, flexWrap: 'wrap',
+                gap: 14, flexWrap: 'wrap',
                 fontSize: 11, color: c.textDim, letterSpacing: '0.05em',
               }}>
                 <span>🔒 Pago seguro</span>
@@ -323,40 +493,41 @@ export default function Offer({ onBuy }) {
             </div>
           </FadeIn>
 
+          {/* ============ GARANTIA — SELO PREMIUM ============ */}
           <FadeIn delay={0.5}>
             <div style={{
               position: 'relative',
-              padding: '28px 24px',
-              background: `linear-gradient(135deg, ${c.bgWarm} 0%, ${c.bgSoft} 100%)`,
+              padding: 'clamp(24px, 6vw, 32px) clamp(20px, 5vw, 28px)',
+              background: isLight
+                ? `linear-gradient(135deg, ${c.bgWarm} 0%, ${c.bgSoft} 100%)`
+                : `linear-gradient(135deg, ${c.bgWarm} 0%, ${c.bgSoft} 100%)`,
               border: `1px solid ${c.borderGold}`,
-              borderLeft: `3px solid ${c.gold}`,
-              display: 'flex', gap: 20, alignItems: 'flex-start',
+              borderRadius: isLight ? 12 : 2,
+              boxShadow: isLight
+                ? `0 12px 32px ${c.shadow}15, 0 2px 6px ${c.shadow}08`
+                : 'none',
+              display: 'flex',
+              gap: 'clamp(16px, 4vw, 24px)',
+              alignItems: 'center',
+              flexWrap: 'wrap',
             }}>
-              <div style={{
-                flexShrink: 0,
-                width: 64, height: 64, borderRadius: '50%',
-                background: `radial-gradient(circle, ${c.gold}30 0%, ${c.gold}10 70%, transparent 100%)`,
-                border: `2px solid ${c.gold}`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: `0 0 24px ${c.gold}40, inset 0 0 12px ${c.gold}20`,
-              }}>
-                <span style={{ color: c.goldBright, fontSize: 28, fontWeight: 300 }}>✓</span>
-              </div>
-              <div style={{ flex: 1 }}>
+              <GuaranteeSeal c={c} isLight={isLight} />
+              <div style={{ flex: 1, minWidth: 180 }}>
                 <div style={{
-                  fontSize: 10, letterSpacing: '0.25em', textTransform: 'uppercase',
-                  color: c.gold, fontWeight: 600, marginBottom: 6,
+                  fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase',
+                  color: goldText, fontWeight: 700, marginBottom: 8,
                 }}>
                   Garantía Blindada
                 </div>
                 <div style={{
                   fontFamily: "'Fraunces', serif", fontStyle: 'italic',
-                  color: c.text, fontSize: 20, marginBottom: 10, letterSpacing: '-0.01em', lineHeight: 1.2,
+                  color: c.text, fontSize: 'clamp(18px, 4.5vw, 22px)',
+                  marginBottom: 12, letterSpacing: '-0.01em', lineHeight: 1.2,
                 }}>
-                  30 días para probarlo, <em style={{ color: c.gold }}>sin riesgo.</em>
+                  Pruébalo sin riesgo, <em style={{ color: goldText }}>por 30 días.</em>
                 </div>
-                <div style={{ fontSize: 13, color: c.textSoft, lineHeight: 1.65 }}>
-                  Aplica el método completo. Si no sientes ningún cambio en la conexión, escríbenos y te devolvemos el 100%. Sin preguntas, sin papeleo.
+                <div style={{ fontSize: 13.5, color: c.textSoft, lineHeight: 1.65 }}>
+                  Aplica el método completo. Si no sientes ningún cambio en la conexión, escríbenos y te devolvemos el <strong style={{ color: c.text }}>100%</strong>. Sin preguntas, sin papeleo.
                 </div>
               </div>
             </div>

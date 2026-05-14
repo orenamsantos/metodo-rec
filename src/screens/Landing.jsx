@@ -1,9 +1,10 @@
-import { c } from '../theme';
+import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import PrimaryButton from '../components/PrimaryButton';
 import Em from '../components/Em';
 
 export default function Landing({ onStart }) {
+  const { c, isLight } = useTheme();
   return (
     <div style={{ paddingTop: 40 }}>
       <FadeIn>
@@ -32,7 +33,14 @@ export default function Landing({ onStart }) {
         </p>
       </FadeIn>
       <FadeIn delay={0.3}>
-        <div style={{ padding: 20, border: `1px solid ${c.border}`, marginBottom: 28, background: c.bgSoft }}>
+        <div style={{
+          padding: 22,
+          border: `1px solid ${c.border}`,
+          borderRadius: isLight ? 8 : 2,
+          marginBottom: 28,
+          background: isLight ? c.bgWarm : c.bgSoft,
+          boxShadow: isLight ? `0 4px 12px ${c.shadow}10` : 'none',
+        }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
             <div style={{ display: 'flex', gap: 2 }}>
               {[1, 2, 3, 4, 5].map((i) => (

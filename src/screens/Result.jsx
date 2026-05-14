@@ -1,8 +1,9 @@
-import { c } from '../theme';
+import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import PrimaryButton from '../components/PrimaryButton';
 
 export default function Result({ name, onNext }) {
+  const { c } = useTheme();
   const fn = (name || '').split(' ')[0] || '';
   return (
     <div style={{ paddingTop: 24 }}>

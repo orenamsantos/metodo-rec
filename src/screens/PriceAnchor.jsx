@@ -1,4 +1,4 @@
-import { c } from '../theme';
+import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import PrimaryButton from '../components/PrimaryButton';
 import Em from '../components/Em';
@@ -12,6 +12,7 @@ const COSTS = [
 ];
 
 export default function PriceAnchor({ onNext }) {
+  const { c } = useTheme();
   return (
     <div style={{ paddingTop: 24 }}>
       <FadeIn>

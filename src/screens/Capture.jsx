@@ -1,10 +1,11 @@
-import { c } from '../theme';
+import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import PrimaryButton from '../components/PrimaryButton';
 import ScreenTitle from '../components/ScreenTitle';
 import Em from '../components/Em';
 
 export default function Capture({ a, setName, setPhone, onSubmit }) {
+  const { c } = useTheme();
   const valid = a.name.trim().length >= 2 && a.phone.replace(/\D/g, '').length >= 8;
 
   const inputStyle = {
