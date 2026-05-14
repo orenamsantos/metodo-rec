@@ -19,9 +19,20 @@ const ITEMS = [
 ];
 
 const TESTIMONIALS = [
-  { quote: 'En 23 días, mi marido me invitó a cenar fuera por primera vez en más de un año. Lloré.', author: 'Marina S.', meta: 'Casada hace 8 años · Colombia' },
-  { quote: 'Estaba a punto de pedir el divorcio. Hoy estamos empezando de nuevo — y está MEJOR que antes.', author: 'Camila R.', meta: 'Casada hace 11 años · México' },
-  { quote: 'El método es diferente. No es "darle espacio" ni "valorarte". Es algo que nadie habla en otro lado.', author: 'Leticia M.', meta: 'Casada hace 6 años · Argentina' },
+  { quote: 'En 23 días, mi marido me invitó a cenar fuera por primera vez en más de un año. Lloré.', author: 'Marina S.', meta: 'Casada hace 8 años · Colombia', photo: '/images/retratos/marina-s-colombia-40.png' },
+  { quote: 'Estaba a punto de pedir el divorcio. Hoy estamos empezando de nuevo — y está MEJOR que antes.', author: 'Camila R.', meta: 'Casada hace 11 años · México', photo: '/images/retratos/camila-mexico-47.png' },
+  { quote: 'El método es diferente. No es "darle espacio" ni "valorarte". Es algo que nadie habla en otro lado.', author: 'Leticia M.', meta: 'Casada hace 6 años · Argentina', photo: '/images/retratos/leticia-m-argentina-33.png' },
+  { quote: 'Llevábamos meses sin tocarnos. Una tarde, después de aplicar la fase 2, mi marido me abrazó por la espalda en la cocina. Sin decir nada. Lloré.', author: 'Carolina', meta: 'Casada hace 9 años · Colombia', photo: '/images/retratos/carolina-colombia-38.png' },
+  { quote: 'Pensé que ya no había nada que rescatar. El método me mostró que el problema no era él — era el patrón en el que ambos caímos. Hoy hablamos de verdad.', author: 'Patricia', meta: 'Casada hace 14 años · Chile', photo: '/images/retratos/patricia-chile-44.png' },
+];
+
+const SOCIAL_PROOF_PRINTS = [
+  { src: '/images/prints/whatsapp-roberto-intima.png', alt: 'Conversación íntima con Roberto — WhatsApp' },
+  { src: '/images/prints/whatsapp-mi-amor-gratidao.png', alt: 'Mensaje "Mi amor" de gratitud — WhatsApp' },
+  { src: '/images/prints/instagram-story-camila.png', alt: 'Story de Camila — Instagram' },
+  { src: '/images/prints/whatsapp-sofi-amiga.png', alt: 'Conversación con la amiga Sofi — WhatsApp' },
+  { src: '/images/prints/instagram-comment-anabel.png', alt: 'Comentario de Anabel — Instagram' },
+  { src: '/images/prints/whatsapp-patricia-audio.png', alt: 'Audio enviado por Patricia — WhatsApp' },
 ];
 
 function CornerOrnaments({ color }) {
@@ -338,13 +349,16 @@ export default function Offer({ onBuy }) {
                     {t.quote}
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, paddingLeft: 16 }}>
-                    <div style={{
-                      width: 34, height: 34, borderRadius: '50%',
-                      background: `linear-gradient(135deg, ${c.gold} 0%, ${c.rose} 100%)`,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontFamily: "'Fraunces', serif", fontSize: 14,
-                      color: isLight ? '#fffaf0' : c.bg, fontWeight: 600,
-                    }}>{t.author[0]}</div>
+                    <img
+                      src={t.photo}
+                      alt={t.author}
+                      loading="lazy"
+                      style={{
+                        width: 34, height: 34, borderRadius: '50%',
+                        objectFit: 'cover', flexShrink: 0,
+                        border: `1px solid ${c.borderSoft}`,
+                      }}
+                    />
                     <div>
                       <div style={{ fontSize: 13, color: c.text, fontWeight: 500 }}>{t.author}</div>
                       <div style={{ fontSize: 10.5, color: c.textDim, letterSpacing: '0.05em', marginTop: 2 }}>{t.meta}</div>
