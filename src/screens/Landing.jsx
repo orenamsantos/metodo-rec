@@ -54,13 +54,24 @@ export default function Landing({ onStart }) {
             fontSize: 14, lineHeight: 1.55, color: c.text, margin: 0,
           }}>
             "Estaba perdida. Este diagnóstico fue el primer paso que realmente tuvo sentido en meses."
+          </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 12 }}>
+            <img
+              src="/images/retratos/camila-mexico-47.png"
+              alt="Camila R., México"
+              loading="lazy"
+              style={{
+                width: 36, height: 36, borderRadius: '50%',
+                objectFit: 'cover', flexShrink: 0,
+                border: `1px solid ${c.borderSoft}`,
+              }}
+            />
             <span style={{
-              display: 'block', marginTop: 8, fontStyle: 'normal', fontSize: 12,
-              color: c.textDim, fontFamily: "'Manrope', sans-serif",
+              fontSize: 12, color: c.textDim, fontFamily: "'Manrope', sans-serif",
             }}>
               — Camila R., casada hace 11 años · México
             </span>
-          </p>
+          </div>
         </div>
       </FadeIn>
       <FadeIn delay={0.4}>
@@ -82,17 +93,27 @@ export default function Landing({ onStart }) {
           }}>
             + 9.000 mujeres en los últimos 30 días
           </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 8 }}>
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} style={{
-                width: 40, height: 40, borderRadius: '50%',
-                background: `linear-gradient(135deg, ${c.gold}40, ${c.rose}40)`,
-                border: `1.5px solid ${c.bg}`, marginLeft: i > 1 ? -12 : 0,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: "'Fraunces', serif", fontSize: 14, color: c.text, fontStyle: 'italic',
-              }}>
-                {['C', 'M', 'L', 'A', 'P'][i - 1]}
-              </div>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            {[
+              { src: '/images/retratos/carolina-colombia-38.png', alt: 'Carolina, Colombia' },
+              { src: '/images/retratos/marina-argentina-42.png', alt: 'Marina, Argentina' },
+              { src: '/images/retratos/leticia-brasil-35.png', alt: 'Letícia, Brasil' },
+              { src: '/images/retratos/alejandra-peru-49.png', alt: 'Alejandra, Peru' },
+              { src: '/images/retratos/patricia-chile-44.png', alt: 'Patrícia, Chile' },
+            ].map((p, i) => (
+              <img
+                key={p.src}
+                src={p.src}
+                alt={p.alt}
+                loading="lazy"
+                style={{
+                  width: 40, height: 40, borderRadius: '50%',
+                  objectFit: 'cover',
+                  border: `1.5px solid ${c.bg}`,
+                  marginLeft: i > 0 ? -12 : 0,
+                  boxShadow: isLight ? `0 2px 6px ${c.shadow}20` : 'none',
+                }}
+              />
             ))}
           </div>
         </div>
