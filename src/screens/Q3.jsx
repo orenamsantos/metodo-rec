@@ -1,4 +1,5 @@
 import FadeIn from '../components/FadeIn';
+import { useTheme } from '../ThemeContext';
 import OptionCard from '../components/OptionCard';
 import ScreenTitle from '../components/ScreenTitle';
 import Em from '../components/Em';
