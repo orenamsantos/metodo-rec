@@ -36,4 +36,20 @@ Screenshots de WhatsApp e Instagram usados nas seções de validação.
 
 - **Formato:** PNG.
 - **Nomenclatura:** `<primeiro-nome>[-inicial]-<pais>-<idade>.png` para retratos; `<canal>-<remetente-ou-cena>-<tema>.png` para prints.
-- **Otimização:** os arquivos atuais são os originais (sem resize/recompressão). Considerar otimizar antes de produção (sugestão: retratos max 800×800 @ q85, prints max 600×1067 @ q85).
+- **Otimização:** retratos a 800×800 e prints a 600×1066 (9:16), comprimidos com `pngquant --quality=75-90 --strip`. Total da pasta ≈ 3.8MB.
+
+Para re-otimizar após adicionar novas imagens:
+
+```bash
+# retratos
+for f in public/images/retratos/*.png; do
+  convert "$f" -resize "800x800>" -strip "$f.tmp" && \
+    pngquant --quality=75-90 --strip --force --output "$f" "$f.tmp" && rm "$f.tmp"
+done
+
+# prints
+for f in public/images/prints/*.png; do
+  convert "$f" -resize "600x1067>" -strip "$f.tmp" && \
+    pngquant --quality=75-90 --strip --force --output "$f" "$f.tmp" && rm "$f.tmp"
+done
+```
