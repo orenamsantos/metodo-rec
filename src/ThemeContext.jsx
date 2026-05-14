@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { themes, DEFAULT_THEME } from './themes';
 
 const ThemeContext = createContext(null);
-const STORAGE_KEY = 'metodo-rec:theme';
+const STORAGE_KEY = 'metodo-rec:theme:v2';
 
 export function ThemeProvider({ children }) {
   const [themeKey, setThemeKey] = useState(() => {

@@ -1,5 +1,4 @@
 import { useTheme } from '../ThemeContext';
-import ThemeToggle from './ThemeToggle';
 
 export default function Layout({ children }) {
   const { c, grain, grainOpacity, grainBlend, background } = useTheme();
@@ -25,7 +24,6 @@ export default function Layout({ children }) {
           zIndex: 1,
         }}
       />
-      <ThemeToggle />
       <div
         style={{
           position: 'relative',
