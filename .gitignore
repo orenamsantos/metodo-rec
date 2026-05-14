@@ -11,9 +11,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 dist/
+dist-ssr/
 build/
 .cache/
 .next/
 .turbo/
+.vercel/
 coverage/
 *.pem
+package-lock.json.bak

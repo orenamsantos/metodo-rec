@@ -1,0 +1,21 @@
+{
+  "name": "metodo-rec",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Funil de vendas Método R.E.C. — quiz diagnóstico + esteira de produtos em espanhol neutro LATAM",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.27.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
+    "vite": "^5.4.10"
+  }
+}

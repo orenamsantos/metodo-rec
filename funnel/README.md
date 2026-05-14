@@ -1,6 +1,50 @@
 # Funil — Quiz Diagnóstico Método R.E.C.
 
-Componente React único (`Quiz.jsx`) que implementa todo o funil de vendas — da landing à thank you page — em 17 telas sequenciais.
+> **Nota:** o código real da aplicação vive em [`src/`](../src/) na raiz do repo. Esta pasta contém apenas a documentação do funil. O monolito antigo `Quiz.jsx` foi quebrado em componentes modulares — veja a estrutura abaixo.
+
+## Estrutura do código (em `src/`)
+
+```
+src/
+├── main.jsx                 # Entry point — React + BrowserRouter
+├── App.jsx                  # Roteamento (/, /upsell, /downsell, /acceso)
+├── theme.js                 # Paleta `c` + GRAIN texture
+├── components/              # Reutilizáveis
+│   ├── Layout.jsx           # Wrapper com background + grain + keyframes
+│   ├── FadeIn.jsx
+│   ├── Em.jsx
+│   ├── PrimaryButton.jsx
+│   ├── BuyButton.jsx
+│   ├── GhostButton.jsx
+│   ├── OptionCard.jsx
+│   ├── ScreenTitle.jsx
+│   └── ProgressBar.jsx
+├── screens/                 # Telas internas do Quiz (0-13)
+│   ├── Landing.jsx          # Tela 0
+│   ├── Q1.jsx ... Q5.jsx    # Telas 1, 2, 4, 6, 7
+│   ├── Interrupt.jsx        # Tela 3
+│   ├── VideoMiddle.jsx      # Tela 5
+│   ├── Capture.jsx          # Tela 8
+│   ├── Loading.jsx          # Tela 9
+│   ├── Result.jsx           # Tela 10
+│   ├── PriceAnchor.jsx      # Tela 11
+│   ├── Offer.jsx            # Tela 12
+│   └── Checkout.jsx         # Tela 13
+└── pages/                   # Rotas
+    ├── Quiz.jsx             # Rota / → orquestra screens 0-13
+    ├── Upsell.jsx           # Rota /upsell → Tela 14
+    ├── Downsell.jsx         # Rota /downsell → Tela 15
+    └── Acceso.jsx           # Rota /acceso → Tela 16
+```
+
+## Rotas
+
+| URL | Tela(s) | Função |
+|---|---|---|
+| `/` | 0-13 (Landing → Checkout) | Quiz diagnóstico completo |
+| `/upsell` | 14 | 30 Cartas y Guiones — $47 |
+| `/downsell` | 15 | 7 Guiones Críticos — $27 (se rejeitar upsell) |
+| `/acceso` | 16 | Thank You · Acceso liberado |
 
 ## As 17 telas
 
@@ -26,53 +70,60 @@ Componente React único (`Quiz.jsx`) que implementa todo o funil de vendas — d
 
 ## Rodar localmente
 
-Recomendado **Vite + React**:
-
 ```bash
-npm create vite@latest metodo-rec-funnel -- --template react
-cd metodo-rec-funnel
 npm install
-# Copiar Quiz.jsx para src/
-# Em src/App.jsx: import Quiz from './Quiz'; export default () => <Quiz />;
 npm run dev
 ```
 
 Acesse `http://localhost:5173`.
 
-## Dependências
+Build de produção:
+```bash
+npm run build
+npm run preview
+```
 
-- **React 18+** (hooks: useState, useEffect)
-- **Fontes via Google Fonts CDN** — `Fraunces` (display, com itálico) + `Manrope` (body). Carregadas automaticamente pelo componente via `<link rel="stylesheet">` injetado em runtime
-- Não usa nenhuma lib externa de UI — todo CSS é inline via objeto `c` de tokens
+## Dependências principais
+
+- **React 18+**
+- **React Router DOM 6+** — roteamento SPA
+- **Vite 5+** — build tool
+- **Fraunces + Manrope** (Google Fonts CDN, preload em `index.html`)
+- Sem libs de UI externas — todo CSS é inline via `theme.js`
 
 ## Configurações importantes
 
-### `REVEAL_DELAY_MS` na função `Offer`
+### `REVEAL_DELAY_MS` em `src/screens/Offer.jsx`
 
-No componente `Offer` (Tela 12), a constante controla quanto tempo o usuário precisa "assistir" antes do plano completo + caixa de oferta aparecerem.
+Constante que controla quanto tempo o usuário "assiste" antes de o plano completo + caixa de oferta aparecerem.
 
-```jsx
+```js
 const REVEAL_DELAY_MS = 5000; // 5 segundos para teste
 ```
 
-**Em produção**, ajustar para o momento em que a VSL apresenta a oferta:
+**Em produção:**
 - VSL de 4 min → ~150000 ms (2:30)
 - VSL de 6 min → ~240000 ms (4:00)
 
-Linha aproximada: ~820 no `Quiz.jsx`.
-
 ### Estado do quiz
 
-Único `useState` chamado `a` (answers) que persiste:
+Único `useState` chamado `a` (answers) em `src/pages/Quiz.jsx`:
 - `timeAgo`, `feelings[]`, `triedTalking`, `commitment`, `timeLeft`
 - `name`, `phone` (capturados na Tela 8)
 
 Não há persistência em localStorage — recarregar perde tudo. Para enviar pra CRM/webhook ver [INTEGRATION.md](./INTEGRATION.md).
 
+## Otimizações aplicadas
+
+- **Lazy load** de `Upsell`, `Downsell`, `Acceso` (não carregadas até navegação)
+- **Manual chunks** em `vite.config.js` separando vendor (react/react-router) do app
+- **Preconnect** + preload de fontes Google em `index.html`
+- **`vercel.json`** com cache imutável em `/assets/*` e rewrite SPA pra todas as rotas
+- **Suspense fallback** sem flash (null) durante lazy loading
+
 ## Notas de design
 
 - Paleta editorial dark warm dourada — ver [design-system.md](./design-system.md)
-- Animações: fadeUp, pulse, shimmer, glow-pulse, price-shimmer
+- Animações: fadeUp, pulse, shimmer, glow-pulse, price-shimmer (definidas em `Layout.jsx`)
 - Mobile-first: max-width 640px, `clamp()` em fontes
-- Cada tela faz scroll-to-top automaticamente no mount
 - Barra de progresso aparece nas telas 1-8 (etapas 1 de 8 → 8 de 8)
