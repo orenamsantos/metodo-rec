@@ -27,13 +27,36 @@ O **Método R.E.C.** (Reconexión · Encantamiento · Compromiso) é um sistema 
 
 ```
 metodo-rec/
-├── funnel/        # Componente React do quiz + integração
+├── src/           # Aplicação React (Vite + React Router)
+│   ├── pages/     # Rotas: Quiz, Upsell, Downsell, Acceso
+│   ├── screens/   # 14 telas internas do quiz (modularizadas)
+│   ├── components/# Componentes reutilizáveis (botões, layout, etc.)
+│   └── theme.js   # Paleta de cores e design tokens
+├── funnel/        # Documentação do funil (README, INTEGRATION, design system)
 ├── copy/          # Toda a copy do funil, organizada por tela
 ├── strategy/      # Pricing, persona, psicologia, metas
 ├── products/      # Briefs dos 8 produtos da esteira
 ├── automation/    # Sequências de email e WhatsApp
 └── docs/          # Tech stack, ferramentas, roadmap, glossário
 ```
+
+## Rodar localmente
+
+```bash
+npm install
+npm run dev
+```
+
+Acesse `http://localhost:5173`. Build de produção: `npm run build`.
+
+## Rotas
+
+| URL | Função |
+|---|---|
+| `/` | Quiz diagnóstico (17 telas, Landing → Checkout) |
+| `/upsell` | 30 Cartas y Guiones — $47 (pós-compra) |
+| `/downsell` | 7 Guiones Críticos — $27 (se rejeitar upsell) |
+| `/acceso` | Thank You · Acceso liberado |
 
 ## Esteira de produtos
 
