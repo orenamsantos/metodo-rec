@@ -265,7 +265,7 @@ export default function Offer({ onBuy }) {
           overflow: 'hidden',
         }}>
           <iframe
-            src="https://play.tynk.ai/embed/6310476e-80e4-4769-b08d-c3919eb202f5"
+            src="https://play.tynk.ai/p/6310476e-80e4-4769-b08d-c3919eb202f5"
             title="VSL — Método R.E.C."
             allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
             allowFullScreen

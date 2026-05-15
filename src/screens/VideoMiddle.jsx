@@ -33,7 +33,7 @@ export default function VideoMiddle({ onNext }) {
           overflow: 'hidden',
         }}>
           <iframe
-            src="https://play.tynk.ai/embed/64584f35-69ed-4d88-822f-09156159a24e"
+            src="https://play.tynk.ai/p/64584f35-69ed-4d88-822f-09156159a24e"
             title="Video de la especialista — Dra. Sofía Restrepo"
             allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
             allowFullScreen
