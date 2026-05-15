@@ -3,7 +3,38 @@ import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import BuyButton from '../components/BuyButton';
 import Em from '../components/Em';
-import { trackPurchaseIntent } from '../lib/tracking';
+import { trackPurchaseIntent, trackOfferView } from '../lib/tracking';
+import { STORAGE_KEY as QUIZ_STATE_KEY } from '../hooks/useQuizState';
+
+const OFFER_SEEN_KEY = 'metodorec_offer_seen';
+const OFFER_SEEN_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+
+function readOfferSeen() {
+  try {
+    const raw = window.localStorage.getItem(OFFER_SEEN_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (typeof parsed?.firstSeenAt !== 'number') return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function writeOfferSeen(payload) {
+  try { window.localStorage.setItem(OFFER_SEEN_KEY, JSON.stringify(payload)); } catch {}
+}
+
+function arrivedViaQuizFlow() {
+  try {
+    const raw = window.localStorage.getItem(QUIZ_STATE_KEY);
+    if (!raw) return false;
+    const parsed = JSON.parse(raw);
+    return typeof parsed?.currentStep === 'number' && parsed.currentStep >= 11;
+  } catch {
+    return false;
+  }
+}
 
 // ============ REVELACIÓN PROGRESIVA ============
 // En producción: cambiar este valor (en ms) para el tiempo donde tu VSL
@@ -155,8 +186,33 @@ function GuaranteeSeal({ c, isLight }) {
 
 export default function Offer({ onBuy }) {
   const { c, isLight } = useTheme();
-  const [revealed, setRevealed] = useState(false);
+
+  const decideInitialReveal = () => {
+    const seen = readOfferSeen();
+    const within30d = seen && Date.now() - seen.firstSeenAt < OFFER_SEEN_TTL_MS;
+    return !!within30d;
+  };
+
+  const [revealed, setRevealed] = useState(decideInitialReveal);
+
   useEffect(() => {
+    const seen = readOfferSeen();
+    const within30d = seen && Date.now() - seen.firstSeenAt < OFFER_SEEN_TTL_MS;
+    const viaQuiz = arrivedViaQuizFlow();
+
+    if (within30d) {
+      // Returning visitor — reveal immediately, increment counter
+      writeOfferSeen({ firstSeenAt: seen.firstSeenAt, viewCount: (seen.viewCount || 1) + 1 });
+      trackOfferView({ isFirstView: false, viewCount: (seen.viewCount || 1) + 1, delaySkipped: true });
+      return;
+    }
+
+    // First view (or expired) — only persist flag if arrived via natural flow
+    if (viaQuiz) {
+      writeOfferSeen({ firstSeenAt: Date.now(), viewCount: 1 });
+    }
+    trackOfferView({ isFirstView: true, viewCount: 1, delaySkipped: false });
+
     const t = setTimeout(() => setRevealed(true), REVEAL_DELAY_MS);
     return () => clearTimeout(t);
   }, []);

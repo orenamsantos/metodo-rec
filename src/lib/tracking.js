@@ -38,6 +38,22 @@ export function trackQuizComplete(leadData) {
   window.dispatchEvent(new CustomEvent('quiz:complete', { detail: { hasEmail } }));
 }
 
+export function trackOfferView({ isFirstView, viewCount, delaySkipped }) {
+  const detail = {
+    is_first_view: isFirstView,
+    view_count: viewCount,
+    delay_skipped: delaySkipped,
+  };
+
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', 'offer_view', detail);
+  }
+  if (typeof window.fbq === 'function') {
+    window.fbq('trackCustom', 'OfferView', detail);
+  }
+  window.dispatchEvent(new CustomEvent('quiz:offer_view', { detail }));
+}
+
 export function trackPurchaseIntent(productSlug, priceUSD) {
   if (typeof window.gtag === 'function') {
     window.gtag('event', 'begin_checkout', {
