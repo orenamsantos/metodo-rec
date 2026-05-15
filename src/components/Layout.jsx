@@ -58,6 +58,13 @@ export default function Layout({ children }) {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
+        @keyframes skip-attract {
+          0%   { transform: scale(1);    box-shadow: 0 0 0 0   rgba(212, 165, 116, 0.65); }
+          50%  { transform: scale(1.04); box-shadow: 0 0 0 14px rgba(212, 165, 116, 0); }
+          100% { transform: scale(1);    box-shadow: 0 0 0 0   rgba(212, 165, 116, 0); }
+        }
+        .skip-attract { animation: skip-attract 1.5s ease-out 1; border-radius: inherit; }
+        html { scroll-behavior: smooth; }
         ::selection { background: rgba(184, 153, 104, 0.3); }
       `}</style>
     </div>

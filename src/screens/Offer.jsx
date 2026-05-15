@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import BuyButton from '../components/BuyButton';
@@ -198,6 +198,27 @@ export default function Offer({ onBuy }) {
   };
 
   const [revealed, setRevealed] = useState(decideInitialReveal);
+  const [skipHover, setSkipHover] = useState(false);
+  const [pulsing, setPulsing] = useState(false);
+  const buyRef = useRef(null);
+
+  const handleSkipToOffer = () => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'skip_to_offer_click');
+    }
+    if (typeof window.fbq === 'function') {
+      window.fbq('trackCustom', 'SkipToOfferClick');
+    }
+    window.dispatchEvent(new CustomEvent('quiz:skip_to_offer_click'));
+
+    if (buyRef.current) {
+      buyRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    window.setTimeout(() => {
+      setPulsing(true);
+      window.setTimeout(() => setPulsing(false), 1500);
+    }, 700);
+  };
 
   useEffect(() => {
     // ?nodelay=1 bypasses everything — view param, doesn't touch localStorage
@@ -277,6 +298,39 @@ export default function Offer({ onBuy }) {
           />
         </div>
       </FadeIn>
+
+      {revealed && (
+        <FadeIn>
+          <button
+            type="button"
+            onClick={handleSkipToOffer}
+            onMouseEnter={() => setSkipHover(true)}
+            onMouseLeave={() => setSkipHover(false)}
+            style={{
+              display: 'block',
+              margin: '20px auto 28px',
+              padding: 'clamp(14px, 3.6vw, 16px) clamp(28px, 6vw, 32px)',
+              background: skipHover
+                ? (isLight ? `${c.goldDeep}1a` : `${c.gold}1a`)
+                : 'transparent',
+              color: skipHover
+                ? (isLight ? c.goldDeep : c.goldBright)
+                : (isLight ? c.goldDeep : c.gold),
+              border: `1.5px solid ${isLight ? c.goldDeep : c.gold}`,
+              borderRadius: 999,
+              fontFamily: "'Manrope', sans-serif",
+              fontWeight: 500,
+              fontSize: 'clamp(15px, 4vw, 16px)',
+              letterSpacing: '0.02em',
+              cursor: 'pointer',
+              transition: 'background 0.2s ease, color 0.2s ease',
+              WebkitTapHighlightColor: 'transparent',
+            }}
+          >
+            Sí, quiero empezar hoy
+          </button>
+        </FadeIn>
+      )}
 
       {!revealed && (
         <FadeIn delay={0.3}>
@@ -601,7 +655,11 @@ export default function Offer({ onBuy }) {
                 Equivale a <strong style={{ color: isLight ? c.goldDeep : c.goldBright }}>menos del 25%</strong> de una sesión de terapia
               </div>
 
-              <div style={{ position: 'relative' }}>
+              <div
+                ref={buyRef}
+                className={pulsing ? 'skip-attract' : undefined}
+                style={{ position: 'relative', borderRadius: isLight ? 6 : 2 }}
+              >
                 <BuyButton onClick={() => { trackPurchaseIntent('oferta-vsl', 27); onBuy(); }} subtitle="Acceso inmediato · Sin compromiso">
                   Acceder al Método
                 </BuyButton>
