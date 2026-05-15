@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ProgressBar from '../components/ProgressBar';
+import BackButton from '../components/BackButton';
 import Landing from '../screens/Landing';
 import Q1 from '../screens/Q1';
 import Q2 from '../screens/Q2';
@@ -84,6 +85,16 @@ export default function Quiz() {
   }, [screen]);
 
   const next = () => setScreen((s) => s + 1);
+  const goBack = () => {
+    setScreen((s) => {
+      const target = Math.max(0, s - 1);
+      window.dispatchEvent(new CustomEvent('quiz:back', { detail: { from: s, to: target } }));
+      return target;
+    });
+  };
+  const BACK_BLOCKED = new Set([0, 9, 13]);
+  const canGoBack = !BACK_BLOCKED.has(screen);
+
   const set = (k, v) => setA((p) => ({ ...p, [k]: v }));
   const toggle = (f) =>
     setA((p) => ({
@@ -96,6 +107,7 @@ export default function Quiz() {
 
   return (
     <>
+      {canGoBack && <BackButton onClick={goBack} />}
       {showProgress && <ProgressBar step={stepFromScreen(screen)} />}
 
       {screen === 0 && <Landing onStart={next} />}
