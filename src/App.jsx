@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
+import DebugPanel from './components/DebugPanel';
 import Quiz from './pages/Quiz';
 
 const Upsell = lazy(() => import('./pages/Upsell'));
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="*" element={<Quiz />} />
         </Routes>
       </Suspense>
+      <DebugPanel />
     </Layout>
   );
 }

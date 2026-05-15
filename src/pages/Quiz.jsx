@@ -18,7 +18,7 @@ import PriceAnchor from '../screens/PriceAnchor';
 import Offer from '../screens/Offer';
 import Checkout from '../screens/Checkout';
 
-import { STEPS, QUIZ_INTERNAL_MAX_ID } from '../lib/steps';
+import { STEPS, QUIZ_INTERNAL_MAX_ID, isInternalStep } from '../lib/steps';
 import { trackStepChange } from '../lib/tracking';
 import useQuizState from '../hooks/useQuizState';
 
@@ -51,7 +51,21 @@ function writeSlugToHash(slug) {
 export default function Quiz() {
   const navigate = useNavigate();
   const hashSlug = readSlugFromHash();
-  const { screen, setScreen, a, setA, goNext, goBack } = useQuizState({ hashSlug });
+  const { screen, setScreen, a, setA, goNext, goBack, jumpTo, reset } = useQuizState({ hashSlug });
+
+  useEffect(() => {
+    const onJump = (e) => {
+      const id = e.detail?.stepId;
+      if (typeof id === 'number' && isInternalStep(id)) jumpTo(id);
+    };
+    const onReset = () => reset();
+    window.addEventListener('quiz:debug:jump', onJump);
+    window.addEventListener('quiz:debug:reset', onReset);
+    return () => {
+      window.removeEventListener('quiz:debug:jump', onJump);
+      window.removeEventListener('quiz:debug:reset', onReset);
+    };
+  }, [jumpTo, reset]);
 
   useEffect(() => {
     if (screen === 9) {
