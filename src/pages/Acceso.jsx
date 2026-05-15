@@ -4,6 +4,7 @@ import FadeIn from '../components/FadeIn';
 import Em from '../components/Em';
 import { trackStepChange, trackQuizComplete } from '../lib/tracking';
 import { getStepBySlug } from '../lib/steps';
+import { clearQuizStorage } from '../hooks/useQuizState';
 
 export default function Acceso() {
   const { c } = useTheme();
@@ -11,6 +12,7 @@ export default function Acceso() {
     const step = getStepBySlug('gracias');
     if (step) trackStepChange(step.slug, step.id);
     trackQuizComplete();
+    clearQuizStorage();
   }, []);
   return (
     <div style={{ paddingTop: '8vh', textAlign: 'center' }}>
