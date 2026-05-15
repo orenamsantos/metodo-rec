@@ -27,32 +27,23 @@ export default function VideoMiddle({ onNext }) {
         <div style={{
           position: 'relative', width: '100%', aspectRatio: '9 / 16',
           maxWidth: 380, margin: '0 auto 28px',
-          background: `linear-gradient(180deg, #2a1f17 0%, #1a1310 100%)`,
+          background: '#000',
           border: `1px solid ${c.border}`,
-          display: 'flex', flexDirection: 'column',
-          alignItems: 'center', justifyContent: 'center',
-          cursor: 'pointer', overflow: 'hidden',
+          borderRadius: 12,
+          overflow: 'hidden',
         }}>
-          <div style={{
-            width: 64, height: 64, borderRadius: '50%',
-            border: `2px solid ${c.gold}`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            marginBottom: 16, background: `${c.gold}15`,
-          }}>
-            <span style={{ color: c.gold, fontSize: 22, marginLeft: 4 }}>▶</span>
-          </div>
-          <div style={{
-            fontFamily: "'Fraunces', serif", fontStyle: 'italic',
-            color: c.goldBright, fontSize: 14, letterSpacing: '0.1em', marginBottom: 6,
-          }}>
-            [ VIDEO DE LA ESPECIALISTA ]
-          </div>
-          <div style={{
-            color: c.textDim, fontSize: 11,
-            letterSpacing: '0.15em', textTransform: 'uppercase',
-          }}>
-            ~3 min · Avatar HeyGen + B-roll Veo3
-          </div>
+          <iframe
+            src="https://play.tynk.ai/embed/64584f35-69ed-4d88-822f-09156159a24e"
+            title="Video de la especialista — Dra. Sofía Restrepo"
+            allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+            allowFullScreen
+            loading="lazy"
+            style={{
+              position: 'absolute', inset: 0,
+              width: '100%', height: '100%',
+              border: 0, display: 'block',
+            }}
+          />
         </div>
       </FadeIn>
       <FadeIn delay={0.35}>

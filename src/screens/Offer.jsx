@@ -8,7 +8,7 @@ import Em from '../components/Em';
 // En producción: cambiar este valor (en ms) para el tiempo donde tu VSL
 // empieza a presentar la oferta. Para VSL de 4-6 min, suele ser entre
 // 150000 (2:30) y 240000 (4:00).
-const REVEAL_DELAY_MS = 5000;
+const REVEAL_DELAY_MS = 195000;
 
 const ITEMS = [
   { title: 'Ebook "Método R.E.C." completo', desc: 'El paso a paso de las 3 fases para reavivar la conexión emocional en 30 días. 120 páginas, sin relleno.', value: '$97' },
@@ -188,39 +188,28 @@ export default function Offer({ onBuy }) {
         </h1>
       </FadeIn>
 
-      {/* VSL placeholder */}
+      {/* VSL — Tynk.ai */}
       <FadeIn delay={0.2}>
         <div style={{
           position: 'relative', width: '100%', aspectRatio: '16 / 9',
-          background: isLight
-            ? `linear-gradient(180deg, ${c.bgDeep} 0%, ${c.bgSoft} 100%)`
-            : `linear-gradient(180deg, #3a2820 0%, #241813 100%)`,
+          background: '#000',
           border: `1px solid ${c.border}`,
-          borderRadius: isLight ? 8 : 2,
-          display: 'flex', flexDirection: 'column',
-          alignItems: 'center', justifyContent: 'center',
-          cursor: 'pointer', marginBottom: 24,
+          borderRadius: 12,
+          marginBottom: 24,
           boxShadow: isLight ? `0 12px 32px ${c.shadow}18` : 'none',
           overflow: 'hidden',
         }}>
-          <div style={{
-            width: 72, height: 72, borderRadius: '50%',
-            border: `2px solid ${goldText}`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            marginBottom: 14, background: `${c.gold}20`,
-          }}>
-            <span style={{ color: goldText, fontSize: 26, marginLeft: 4 }}>▶</span>
-          </div>
-          <div style={{
-            fontFamily: "'Fraunces', serif", fontStyle: 'italic',
-            color: isLight ? c.goldDeep : c.goldBright,
-            fontSize: 13, letterSpacing: '0.1em', marginBottom: 4,
-          }}>
-            [ VSL DE OFERTA ]
-          </div>
-          <div style={{ color: c.textDim, fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase' }}>
-            4-6 min · Avatar HeyGen presenta el método
-          </div>
+          <iframe
+            src="https://play.tynk.ai/embed/6310476e-80e4-4769-b08d-c3919eb202f5"
+            title="VSL — Método R.E.C."
+            allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+            allowFullScreen
+            style={{
+              position: 'absolute', inset: 0,
+              width: '100%', height: '100%',
+              border: 0, display: 'block',
+            }}
+          />
         </div>
       </FadeIn>
 
