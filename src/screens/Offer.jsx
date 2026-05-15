@@ -41,7 +41,7 @@ function arrivedViaQuizFlow() {
 // En producción: cambiar este valor (en ms) para el tiempo donde tu VSL
 // empieza a presentar la oferta. Para VSL de 4-6 min, suele ser entre
 // 150000 (2:30) y 240000 (4:00).
-const REVEAL_DELAY_MS = 195000;
+const REVEAL_DELAY_MS = 290000;
 
 const ITEMS = [
   { title: 'Ebook "Método R.E.C." completo', desc: 'El paso a paso de las 3 fases para reavivar la conexión emocional en 30 días. 120 páginas, sin relleno.', value: '$97' },
