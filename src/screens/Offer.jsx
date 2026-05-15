@@ -5,6 +5,7 @@ import BuyButton from '../components/BuyButton';
 import Em from '../components/Em';
 import { trackPurchaseIntent, trackOfferView } from '../lib/tracking';
 import { STORAGE_KEY as QUIZ_STATE_KEY } from '../hooks/useQuizState';
+import { getQueryParams } from '../lib/queryParams';
 
 const OFFER_SEEN_KEY = 'metodorec_offer_seen';
 const OFFER_SEEN_TTL_MS = 30 * 24 * 60 * 60 * 1000;
@@ -187,7 +188,10 @@ function GuaranteeSeal({ c, isLight }) {
 export default function Offer({ onBuy }) {
   const { c, isLight } = useTheme();
 
+  const { nodelay } = getQueryParams();
+
   const decideInitialReveal = () => {
+    if (nodelay) return true;
     const seen = readOfferSeen();
     const within30d = seen && Date.now() - seen.firstSeenAt < OFFER_SEEN_TTL_MS;
     return !!within30d;
@@ -196,18 +200,22 @@ export default function Offer({ onBuy }) {
   const [revealed, setRevealed] = useState(decideInitialReveal);
 
   useEffect(() => {
+    // ?nodelay=1 bypasses everything — view param, doesn't touch localStorage
+    if (nodelay) {
+      trackOfferView({ isFirstView: false, viewCount: 0, delaySkipped: true });
+      return;
+    }
+
     const seen = readOfferSeen();
     const within30d = seen && Date.now() - seen.firstSeenAt < OFFER_SEEN_TTL_MS;
     const viaQuiz = arrivedViaQuizFlow();
 
     if (within30d) {
-      // Returning visitor — reveal immediately, increment counter
       writeOfferSeen({ firstSeenAt: seen.firstSeenAt, viewCount: (seen.viewCount || 1) + 1 });
       trackOfferView({ isFirstView: false, viewCount: (seen.viewCount || 1) + 1, delaySkipped: true });
       return;
     }
 
-    // First view (or expired) — only persist flag if arrived via natural flow
     if (viaQuiz) {
       writeOfferSeen({ firstSeenAt: Date.now(), viewCount: 1 });
     }
@@ -215,7 +223,7 @@ export default function Offer({ onBuy }) {
 
     const t = setTimeout(() => setRevealed(true), REVEAL_DELAY_MS);
     return () => clearTimeout(t);
-  }, []);
+  }, [nodelay]);
 
   const stack = ITEMS.reduce((sum, it) => sum + parseInt(it.value.replace(/\D/g, ''), 10), 0);
   const price = 27;

@@ -21,6 +21,7 @@ import Checkout from '../screens/Checkout';
 import { STEPS, QUIZ_INTERNAL_MAX_ID, isInternalStep } from '../lib/steps';
 import { trackStepChange } from '../lib/tracking';
 import useQuizState from '../hooks/useQuizState';
+import { getQueryParams } from '../lib/queryParams';
 
 function stepFromScreen(s) {
   if (s === 0) return 0;
@@ -51,7 +52,8 @@ function writeSlugToHash(slug) {
 export default function Quiz() {
   const navigate = useNavigate();
   const hashSlug = readSlugFromHash();
-  const { screen, setScreen, a, setA, goNext, goBack, jumpTo, reset } = useQuizState({ hashSlug });
+  const { step: forcedSlug } = getQueryParams();
+  const { screen, setScreen, a, setA, goNext, goBack, jumpTo, reset } = useQuizState({ forcedSlug, hashSlug });
 
   useEffect(() => {
     const onJump = (e) => {
