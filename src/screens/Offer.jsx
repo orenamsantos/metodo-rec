@@ -191,11 +191,11 @@ export default function Offer({ onBuy }) {
       {/* VSL — Tynk.ai */}
       <FadeIn delay={0.2}>
         <div style={{
-          position: 'relative', width: '100%', aspectRatio: '16 / 9',
+          position: 'relative', width: '100%', aspectRatio: '9 / 16',
+          maxWidth: 420, margin: '0 auto 24px',
           background: '#000',
           border: `1px solid ${c.border}`,
           borderRadius: 12,
-          marginBottom: 24,
           boxShadow: isLight ? `0 12px 32px ${c.shadow}18` : 'none',
           overflow: 'hidden',
         }}>
