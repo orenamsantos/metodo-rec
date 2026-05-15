@@ -3,6 +3,7 @@ import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import BuyButton from '../components/BuyButton';
 import Em from '../components/Em';
+import { trackPurchaseIntent } from '../lib/tracking';
 
 // ============ REVELACIÓN PROGRESIVA ============
 // En producción: cambiar este valor (en ms) para el tiempo donde tu VSL
@@ -537,7 +538,7 @@ export default function Offer({ onBuy }) {
               </div>
 
               <div style={{ position: 'relative' }}>
-                <BuyButton onClick={onBuy} subtitle="Acceso inmediato · Sin compromiso">
+                <BuyButton onClick={() => { trackPurchaseIntent('oferta-vsl', 27); onBuy(); }} subtitle="Acceso inmediato · Sin compromiso">
                   Acceder al Método
                 </BuyButton>
               </div>

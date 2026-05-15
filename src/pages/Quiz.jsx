@@ -17,7 +17,9 @@ import PriceAnchor from '../screens/PriceAnchor';
 import Offer from '../screens/Offer';
 import Checkout from '../screens/Checkout';
 
-// Mapeia screen → step da progress bar (1-8)
+import { STEPS, getStepBySlug, isInternalStep, QUIZ_INTERNAL_MAX_ID } from '../lib/steps';
+import { trackStepChange } from '../lib/tracking';
+
 function stepFromScreen(s) {
   if (s === 0) return 0;
   if (s === 1) return 1;
@@ -29,9 +31,31 @@ function stepFromScreen(s) {
   return 7;
 }
 
+function readSlugFromHash() {
+  const hash = window.location.hash;
+  if (!hash || !hash.startsWith('#/')) return null;
+  return hash.slice(2).split('?')[0];
+}
+
+function writeSlugToHash(slug) {
+  const target = slug === 'landing' ? window.location.pathname + window.location.search : `${window.location.pathname}${window.location.search}#/${slug}`;
+  if (window.location.href !== window.location.origin + target) {
+    window.history.replaceState(null, '', target);
+  }
+}
+
 export default function Quiz() {
   const navigate = useNavigate();
-  const [screen, setScreen] = useState(0);
+
+  const [screen, setScreen] = useState(() => {
+    const slug = readSlugFromHash();
+    if (slug) {
+      const step = getStepBySlug(slug);
+      if (step && isInternalStep(step.id)) return step.id;
+    }
+    return 0;
+  });
+
   const [a, setA] = useState({
     timeAgo: null,
     feelings: [],
@@ -42,7 +66,6 @@ export default function Quiz() {
     phone: '',
   });
 
-  // Loading screen auto-advances after 4.2s
   useEffect(() => {
     if (screen === 9) {
       const t = setTimeout(() => setScreen(10), 4200);
@@ -50,8 +73,15 @@ export default function Quiz() {
     }
   }, [screen]);
 
-  // Scroll to top on every screen change
   useEffect(() => { window.scrollTo(0, 0); }, [screen]);
+
+  useEffect(() => {
+    if (screen > QUIZ_INTERNAL_MAX_ID) return;
+    const step = STEPS[screen];
+    if (!step) return;
+    writeSlugToHash(step.slug);
+    trackStepChange(step.slug, step.id);
+  }, [screen]);
 
   const next = () => setScreen((s) => s + 1);
   const set = (k, v) => setA((p) => ({ ...p, [k]: v }));

@@ -1,14 +1,24 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import BuyButton from '../components/BuyButton';
 import GhostButton from '../components/GhostButton';
 import Em from '../components/Em';
+import { trackStepChange, trackPurchaseIntent } from '../lib/tracking';
+import { getStepBySlug } from '../lib/steps';
 
 export default function Upsell() {
   const { c } = useTheme();
   const navigate = useNavigate();
-  const onAccept = () => navigate('/acceso');
+  useEffect(() => {
+    const step = getStepBySlug('upsell-cartas');
+    if (step) trackStepChange(step.slug, step.id);
+  }, []);
+  const onAccept = () => {
+    trackPurchaseIntent('upsell-cartas', 47);
+    navigate('/acceso');
+  };
   const onDecline = () => navigate('/downsell');
 
   return (

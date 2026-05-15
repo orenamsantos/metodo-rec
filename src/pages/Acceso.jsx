@@ -1,9 +1,17 @@
+import { useEffect } from 'react';
 import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import Em from '../components/Em';
+import { trackStepChange, trackQuizComplete } from '../lib/tracking';
+import { getStepBySlug } from '../lib/steps';
 
 export default function Acceso() {
   const { c } = useTheme();
+  useEffect(() => {
+    const step = getStepBySlug('gracias');
+    if (step) trackStepChange(step.slug, step.id);
+    trackQuizComplete();
+  }, []);
   return (
     <div style={{ paddingTop: '8vh', textAlign: 'center' }}>
       <FadeIn>
