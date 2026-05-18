@@ -5,7 +5,7 @@ export const STORAGE_KEY = 'metodorec_quiz_state';
 const STATE_VERSION = 1;
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 const ONE_HOUR_MS  = 60 * 60 * 1000;
-const POST_PURCHASE_MIN_STEP = 13;
+const POST_PURCHASE_MIN_STEP = 12;
 
 const ANSWER_KEY_BY_FIELD = {
   timeAgo:      'q1-tiempo-cambio',
@@ -105,7 +105,7 @@ function loadInitialState({ forcedSlug, hashSlug }) {
 
   // Post-purchase steps expire after 1 hour
   if (storedIsFresh && stored.screen >= POST_PURCHASE_MIN_STEP && Date.now() - stored.lastActiveAt > ONE_HOUR_MS) {
-    base = { screen: 12, a: stored.a, startedAt: stored.startedAt };
+    base = { screen: 11, a: stored.a, startedAt: stored.startedAt };
   }
 
   if (forcedSlug) {
@@ -133,7 +133,7 @@ export default function useQuizState({ forcedSlug = null, hashSlug = null } = {}
   // Clear when user reaches Thank You step (16) — handled in external Acceso page,
   // but also clear if Quiz somehow renders past last internal step
   useEffect(() => {
-    if (screen > 13) clearStorage();
+    if (screen > 12) clearStorage();
   }, [screen]);
 
   // Dev helper
@@ -154,7 +154,7 @@ export default function useQuizState({ forcedSlug = null, hashSlug = null } = {}
     setA((p) => ({ ...p, name: lead.firstName ?? p.name, phone: lead.whatsapp ?? p.phone }));
   }, []);
 
-  const goNext = useCallback(() => setScreen((s) => Math.min(s + 1, 13)), []);
+  const goNext = useCallback(() => setScreen((s) => Math.min(s + 1, 12)), []);
   const goBack = useCallback(() => setScreen((s) => Math.max(s - 1, 0)), []);
   const jumpTo = useCallback((stepId) => {
     if (typeof stepId === 'number' && isInternalStep(stepId)) setScreen(stepId);

@@ -12,13 +12,12 @@ export const STEPS = [
   { id: 10, slug: 'resultado-zona',     name: 'Resultado Zona Crítica' },
   { id: 11, slug: 'anclaje-precio',     name: 'Anclaje de precio' },
   { id: 12, slug: 'oferta-vsl',         name: 'Oferta + VSL' },
-  { id: 13, slug: 'checkout',           name: 'Checkout' },
   { id: 14, slug: 'upsell-cartas',      name: 'Upsell — Cartas y Guiones' },
   { id: 15, slug: 'downsell-guiones',   name: 'Downsell — 7 Guiones' },
   { id: 16, slug: 'gracias',            name: 'Thank You' },
 ];
 
-export const QUIZ_INTERNAL_MAX_ID = 13;
+export const QUIZ_INTERNAL_MAX_ID = 12;
 
 export const getStepBySlug  = (slug) => STEPS.find((s) => s.slug === slug);
 export const getStepById    = (id)   => STEPS.find((s) => s.id === id);
