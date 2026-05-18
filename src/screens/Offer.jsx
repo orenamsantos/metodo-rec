@@ -48,7 +48,7 @@ const ITEMS = [
   { title: 'Planner Diario de 30 días', desc: 'Workbook con ejercicios paso a paso, espacios para registrar avances y reflexiones diarias.', value: '$47' },
   { title: 'Bonus 1: Guía de Primeros Auxilios Emocionales', desc: 'Qué hacer en las primeras 72 horas si la situación está crítica. Para aplicar HOY mismo.', value: '$27' },
   { title: 'Bonus 2: Mapa de Comunicación de Pareja', desc: 'Infografía PDF que identifica los 5 estilos de comunicación y cómo adaptarte al de él.', value: '$19' },
-  { title: 'Bonus 3: Calendario Visual de la Reconexión', desc: 'Tu progreso en una sola página. Imprimible, para pegar en un lugar visible cada día.', value: '$17' },
+  { title: 'Bonus 3: Calendario Visual de la Reconexión', desc: 'Tu progreso en una sola página. Imprimible, para pegar en un lugar visible cada día.', value: '$18' },
 ];
 
 const TESTIMONIALS = [
