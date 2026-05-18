@@ -7,6 +7,9 @@ import { trackPurchaseIntent, trackOfferView } from '../lib/tracking';
 import { STORAGE_KEY as QUIZ_STATE_KEY } from '../hooks/useQuizState';
 import { getQueryParams } from '../lib/queryParams';
 
+const HOTMART_CHECKOUT_URL = 'PLACEHOLDER_HOTMART_URL_AQUI';
+// TODO: substituir pela URL real do checkout Hotmart antes de fazer deploy de produção
+
 const OFFER_SEEN_KEY = 'metodorec_offer_seen';
 const OFFER_SEEN_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -660,7 +663,10 @@ export default function Offer({ onBuy }) {
                 className={pulsing ? 'skip-attract' : undefined}
                 style={{ position: 'relative', borderRadius: isLight ? 6 : 2 }}
               >
-                <BuyButton onClick={() => { trackPurchaseIntent('oferta-vsl', 27); onBuy(); }} subtitle="Acceso inmediato · Sin compromiso">
+                <BuyButton onClick={() => {
+                  trackPurchaseIntent('oferta-vsl', 27);
+                  window.location.href = HOTMART_CHECKOUT_URL;
+                }} subtitle="Acceso inmediato · Sin compromiso">
                   Acceder al Método
                 </BuyButton>
               </div>
