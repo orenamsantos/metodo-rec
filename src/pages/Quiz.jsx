@@ -16,7 +16,6 @@ import Loading from '../screens/Loading';
 import Result from '../screens/Result';
 import PriceAnchor from '../screens/PriceAnchor';
 import Offer from '../screens/Offer';
-import Checkout from '../screens/Checkout';
 
 import { STEPS, QUIZ_INTERNAL_MAX_ID, isInternalStep } from '../lib/steps';
 import { trackStepChange } from '../lib/tracking';
@@ -99,9 +98,8 @@ export default function Quiz() {
     }));
 
   const showProgress = screen > 0 && screen < 9;
-  const BACK_BLOCKED = new Set([0, 9, 13]);
+  const BACK_BLOCKED = new Set([0, 9, 12]);
   const canGoBack = !BACK_BLOCKED.has(screen);
-  const goToUpsell = () => navigate('/upsell');
 
   return (
     <>
@@ -128,7 +126,6 @@ export default function Quiz() {
       {screen === 10 && <Result name={a.name} onNext={goNext} />}
       {screen === 11 && <PriceAnchor onNext={goNext} />}
       {screen === 12 && <Offer onBuy={goNext} />}
-      {screen === 13 && <Checkout onComplete={goToUpsell} />}
     </>
   );
 }
