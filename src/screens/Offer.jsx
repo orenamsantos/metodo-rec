@@ -7,8 +7,7 @@ import { trackPurchaseIntent, trackOfferView } from '../lib/tracking';
 import { STORAGE_KEY as QUIZ_STATE_KEY } from '../hooks/useQuizState';
 import { getQueryParams } from '../lib/queryParams';
 
-const HOTMART_CHECKOUT_URL = 'PLACEHOLDER_HOTMART_URL_AQUI';
-// TODO: substituir pela URL real do checkout Hotmart antes de fazer deploy de produção
+const HOTMART_CHECKOUT_URL = 'https://pay.hotmart.com/L105883495E';
 
 const OFFER_SEEN_KEY = 'metodorec_offer_seen';
 const OFFER_SEEN_TTL_MS = 30 * 24 * 60 * 60 * 1000;
