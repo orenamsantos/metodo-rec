@@ -15,13 +15,23 @@ export default function Landing({ onStart }) {
           Método R.E.C. · Diagnóstico
         </div>
       </FadeIn>
+      <FadeIn delay={0.05}>
+        <div style={{
+          fontFamily: "'Fraunces', serif", fontStyle: 'italic',
+          fontSize: 12, color: c.textSoft,
+          textAlign: 'center', marginBottom: 24,
+        }}>
+          Por la Dra. Sofía Restrepo · Terapeuta de pareja
+        </div>
+      </FadeIn>
       <FadeIn delay={0.1}>
         <h1 style={{
           fontFamily: "'Fraunces', serif", fontSize: 'clamp(32px, 7vw, 46px)',
           fontWeight: 400, lineHeight: 1.1, textAlign: 'center',
           margin: '0 0 24px', letterSpacing: '-0.015em',
         }}>
-          Descubre la <Em>probabilidad real</Em> de reavivar tu matrimonio
+          Tu matrimonio no se está <Em>rompiendo</Em>.<br />
+          Se está apagando en <Em>silencio</Em>.
         </h1>
       </FadeIn>
       <FadeIn delay={0.2}>
@@ -29,7 +39,7 @@ export default function Landing({ onStart }) {
           textAlign: 'center', color: c.textSoft, fontSize: 16, lineHeight: 1.6,
           maxWidth: 480, margin: '0 auto 36px',
         }}>
-          Y cuál es el <strong style={{ color: c.text, fontWeight: 500 }}>bloqueo invisible</strong> que está alejando a tu pareja — antes de que sea demasiado tarde.
+          Descubre cuál de los <strong style={{ color: c.text, fontWeight: 500 }}>3 patrones invisibles</strong> está alejando a tu pareja — y la <strong style={{ color: c.text, fontWeight: 500 }}>probabilidad real</strong> de revertirlo en los próximos 30 días.
         </p>
       </FadeIn>
       <FadeIn delay={0.3}>
@@ -75,7 +85,7 @@ export default function Landing({ onStart }) {
         </div>
       </FadeIn>
       <FadeIn delay={0.4}>
-        <PrimaryButton onClick={onStart}>Iniciar mi Diagnóstico →</PrimaryButton>
+        <PrimaryButton onClick={onStart}>Quiero entender qué pasa →</PrimaryButton>
         <p style={{
           textAlign: 'center', fontSize: 11, color: c.textDim, marginTop: 14, letterSpacing: '0.05em',
         }}>
