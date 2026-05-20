@@ -662,10 +662,13 @@ export default function Offer({ onBuy }) {
                 className={pulsing ? 'skip-attract' : undefined}
                 style={{ position: 'relative', borderRadius: isLight ? 6 : 2 }}
               >
-                <BuyButton onClick={() => {
-                  trackPurchaseIntent('oferta-vsl', 27);
-                  window.location.href = HOTMART_CHECKOUT_URL;
-                }} subtitle="Acceso inmediato · Sin compromiso">
+                <BuyButton
+                  href={HOTMART_CHECKOUT_URL}
+                  id="cta-checkout-frontend"
+                  className="gtm-cta gtm-checkout-frontend"
+                  onClick={() => { trackPurchaseIntent('oferta-vsl', 27); }}
+                  subtitle="Acceso inmediato · Sin compromiso"
+                >
                   Acceder al Método
                 </BuyButton>
               </div>
