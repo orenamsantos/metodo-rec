@@ -18,10 +18,7 @@ export default function Downsell() {
     const step = getStepBySlug('downsell-guiones');
     if (step) trackStepChange(step.slug, step.id);
   }, []);
-  const goAcceso = () => {
-    trackPurchaseIntent('downsell-guiones', 19);
-    navigate('/acceso');
-  };
+  const goAcceso = () => navigate('/acceso');
 
   return (
     <div style={{ paddingTop: 24 }}>
