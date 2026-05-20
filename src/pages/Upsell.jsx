@@ -8,6 +8,9 @@ import Em from '../components/Em';
 import { trackStepChange, trackPurchaseIntent } from '../lib/tracking';
 import { getStepBySlug } from '../lib/steps';
 
+const HOTMART_UPSELL_URL = 'PLACEHOLDER_HOTMART_UPSELL_URL';
+// TODO: substituir pela URL real do checkout do upsell na Hotmart
+
 export default function Upsell() {
   const { c } = useTheme();
   const navigate = useNavigate();
@@ -15,10 +18,6 @@ export default function Upsell() {
     const step = getStepBySlug('upsell-cartas');
     if (step) trackStepChange(step.slug, step.id);
   }, []);
-  const onAccept = () => {
-    trackPurchaseIntent('upsell-cartas', 37);
-    navigate('/acceso');
-  };
   const onDecline = () => navigate('/downsell');
 
   return (
@@ -121,7 +120,13 @@ export default function Upsell() {
               $37
             </div>
           </div>
-          <BuyButton onClick={onAccept} subtitle="Agregar con un clic, sin volver a digitar tarjeta">
+          <BuyButton
+            href={HOTMART_UPSELL_URL}
+            id="cta-upsell"
+            className="gtm-cta gtm-checkout-upsell"
+            onClick={() => { trackPurchaseIntent('upsell-cartas', 37); }}
+            subtitle="Agregar con un clic, sin volver a digitar tarjeta"
+          >
             Sí, Agregar a Mi Pedido
           </BuyButton>
         </div>
