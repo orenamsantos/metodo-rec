@@ -16,7 +16,7 @@ export default function Downsell() {
     if (step) trackStepChange(step.slug, step.id);
   }, []);
   const goAcceso = () => {
-    trackPurchaseIntent('downsell-guiones', 17);
+    trackPurchaseIntent('downsell-guiones', 19);
     navigate('/acceso');
   };
 
@@ -36,7 +36,7 @@ export default function Downsell() {
           fontWeight: 400, lineHeight: 1.2, textAlign: 'center',
           margin: '0 0 16px', letterSpacing: '-0.015em',
         }}>
-          Entiendo que <Em>$47 no era el momento.</Em>
+          Entiendo que <Em>$37 no era el momento.</Em>
         </h1>
       </FadeIn>
       <FadeIn delay={0.2}>
@@ -89,7 +89,7 @@ export default function Downsell() {
               textDecorationColor: c.danger, marginBottom: 14,
               fontFamily: "'Fraunces', serif", fontStyle: 'italic',
             }}>
-              $47
+              $37
             </div>
             <div style={{
               fontSize: 11, color: c.rose, marginBottom: 6,
@@ -104,7 +104,7 @@ export default function Downsell() {
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
               filter: `drop-shadow(0 2px 10px ${c.rose}40)`,
             }}>
-              $27
+              $19
             </div>
           </div>
           <BuyButton onClick={goAcceso} subtitle="Tu última oportunidad de llevarlo">
