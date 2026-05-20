@@ -16,7 +16,7 @@ export default function Upsell() {
     if (step) trackStepChange(step.slug, step.id);
   }, []);
   const onAccept = () => {
-    trackPurchaseIntent('upsell-cartas', 47);
+    trackPurchaseIntent('upsell-cartas', 37);
     navigate('/acceso');
   };
   const onDecline = () => navigate('/downsell');
@@ -118,7 +118,7 @@ export default function Upsell() {
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
               filter: `drop-shadow(0 2px 12px ${c.gold}40)`,
             }}>
-              $47
+              $37
             </div>
           </div>
           <BuyButton onClick={onAccept} subtitle="Agregar con un clic, sin volver a digitar tarjeta">
