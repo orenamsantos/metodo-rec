@@ -8,6 +8,9 @@ import Em from '../components/Em';
 import { trackStepChange, trackPurchaseIntent } from '../lib/tracking';
 import { getStepBySlug } from '../lib/steps';
 
+const HOTMART_DOWNSELL_URL = 'PLACEHOLDER_HOTMART_DOWNSELL_URL';
+// TODO: substituir pela URL real do checkout do downsell na Hotmart
+
 export default function Downsell() {
   const { c } = useTheme();
   const navigate = useNavigate();
@@ -107,7 +110,13 @@ export default function Downsell() {
               $19
             </div>
           </div>
-          <BuyButton onClick={goAcceso} subtitle="Tu última oportunidad de llevarlo">
+          <BuyButton
+            href={HOTMART_DOWNSELL_URL}
+            id="cta-downsell"
+            className="gtm-cta gtm-checkout-downsell"
+            onClick={() => { trackPurchaseIntent('downsell-guiones', 19); }}
+            subtitle="Tu última oportunidad de llevarlo"
+          >
             Sí, Llevar los 7 Guiones
           </BuyButton>
         </div>
