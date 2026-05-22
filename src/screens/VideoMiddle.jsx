@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import PrimaryButton from '../components/PrimaryButton';
@@ -5,6 +6,7 @@ import Em from '../components/Em';
 
 export default function VideoMiddle({ onNext }) {
   const { c } = useTheme();
+  const [videoMountKey] = useState(() => `mid-${Date.now()}`);
   return (
     <div style={{ paddingTop: 24 }}>
       <FadeIn>
@@ -33,11 +35,11 @@ export default function VideoMiddle({ onNext }) {
           overflow: 'hidden',
         }}>
           <iframe
+            key={videoMountKey}
             src="https://play.tynk.ai/p/64584f35-69ed-4d88-822f-09156159a24e"
             title="Video de la especialista — Dra. Sofía Restrepo"
             allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
             allowFullScreen
-            loading="lazy"
             style={{
               position: 'absolute', inset: 0,
               width: '100%', height: '100%',

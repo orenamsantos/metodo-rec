@@ -190,6 +190,7 @@ export default function Offer({ onBuy }) {
   const [revealed, setRevealed] = useState(decideInitialReveal);
   const [skipHover, setSkipHover] = useState(false);
   const [pulsing, setPulsing] = useState(false);
+  const [videoMountKey] = useState(() => `vsl-${Date.now()}`);
   const buyRef = useRef(null);
 
   const handleSkipToOffer = () => {
@@ -287,6 +288,7 @@ export default function Offer({ onBuy }) {
           overflow: 'hidden',
         }}>
           <iframe
+            key={videoMountKey}
             src="https://play.tynk.ai/p/6310476e-80e4-4769-b08d-c3919eb202f5"
             title="VSL — Método R.E.C."
             allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
