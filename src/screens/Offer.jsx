@@ -4,7 +4,6 @@ import FadeIn from '../components/FadeIn';
 import BuyButton from '../components/BuyButton';
 import Em from '../components/Em';
 import { trackPurchaseIntent, trackOfferView } from '../lib/tracking';
-import { STORAGE_KEY as QUIZ_STATE_KEY } from '../hooks/useQuizState';
 import { getQueryParams } from '../lib/queryParams';
 
 const HOTMART_CHECKOUT_URL = 'https://pay.hotmart.com/L105883495E';
@@ -26,17 +25,6 @@ function readOfferSeen() {
 
 function writeOfferSeen(payload) {
   try { window.localStorage.setItem(OFFER_SEEN_KEY, JSON.stringify(payload)); } catch {}
-}
-
-function arrivedViaQuizFlow() {
-  try {
-    const raw = window.localStorage.getItem(QUIZ_STATE_KEY);
-    if (!raw) return false;
-    const parsed = JSON.parse(raw);
-    return typeof parsed?.currentStep === 'number' && parsed.currentStep >= 11;
-  } catch {
-    return false;
-  }
 }
 
 // ============ REVELACIÓN PROGRESIVA ============
@@ -231,7 +219,6 @@ export default function Offer({ onBuy }) {
 
     const seen = readOfferSeen();
     const within30d = seen && Date.now() - seen.firstSeenAt < OFFER_SEEN_TTL_MS;
-    const viaQuiz = arrivedViaQuizFlow();
 
     if (within30d) {
       writeOfferSeen({ firstSeenAt: seen.firstSeenAt, viewCount: (seen.viewCount || 1) + 1 });
@@ -239,12 +226,24 @@ export default function Offer({ onBuy }) {
       return;
     }
 
-    if (viaQuiz) {
-      writeOfferSeen({ firstSeenAt: Date.now(), viewCount: 1 });
+    // Derive reveal from an absolute startedAt timestamp so a remount mid-delay
+    // resumes from real elapsed time instead of restarting the full 290s window.
+    let startedAt;
+    if (seen && typeof seen.firstSeenAt === 'number') {
+      startedAt = seen.firstSeenAt;
+    } else {
+      startedAt = Date.now();
+      writeOfferSeen({ firstSeenAt: startedAt, viewCount: 1 });
+      trackOfferView({ isFirstView: true, viewCount: 1, delaySkipped: false });
     }
-    trackOfferView({ isFirstView: true, viewCount: 1, delaySkipped: false });
 
-    const t = setTimeout(() => setRevealed(true), REVEAL_DELAY_MS);
+    const elapsed = Date.now() - startedAt;
+    if (elapsed >= REVEAL_DELAY_MS) {
+      setRevealed(true);
+      return;
+    }
+    const remaining = REVEAL_DELAY_MS - elapsed;
+    const t = setTimeout(() => setRevealed(true), remaining);
     return () => clearTimeout(t);
   }, [nodelay]);
 
