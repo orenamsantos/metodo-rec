@@ -57,20 +57,4 @@ export function trackPurchaseIntent(productSlug, priceUSD) {
   window.dispatchEvent(new CustomEvent('quiz:purchase_intent', {
     detail: { productSlug, priceUSD },
   }));
-
-  pushToDataLayer({ ecommerce: null });
-  pushToDataLayer({
-    event: 'begin_checkout',
-    event_id: generateEventId(),
-    ecommerce: {
-      currency: 'USD',
-      value: priceUSD,
-      items: [{
-        item_name: productSlug,
-        item_id: productSlug,
-        price: priceUSD,
-        quantity: 1,
-      }],
-    },
-  });
 }
