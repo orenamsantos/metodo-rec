@@ -20,3 +20,4 @@ build/
 coverage/
 *.pem
 package-lock.json.bak
+.superpowers/
