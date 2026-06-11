@@ -253,7 +253,7 @@ export default function Offer({ onBuy }) {
 
   const goldText = isLight ? c.goldDeep : c.gold;
   const priceGradient = isLight
-    ? `linear-gradient(135deg, ${c.goldDeep} 0%, ${c.goldBright} 35%, #f6d8a3 50%, ${c.goldBright} 65%, ${c.goldDeep} 100%)`
+    ? `linear-gradient(135deg, ${c.goldDeep} 0%, ${c.goldBright} 35%, ${c.goldGlow} 50%, ${c.goldBright} 65%, ${c.goldDeep} 100%)`
     : `linear-gradient(135deg, ${c.goldDeep} 0%, ${c.goldBright} 45%, ${c.gold} 55%, ${c.goldDeep} 100%)`;
 
   return (

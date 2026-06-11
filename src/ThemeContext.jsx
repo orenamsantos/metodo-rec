@@ -2,7 +2,9 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { themes, DEFAULT_THEME } from './themes';
 
 const ThemeContext = createContext(null);
-const STORAGE_KEY = 'metodo-rec:theme:v2';
+// v3: Warm Editorial vira o default; o bump garante que visitantes recorrentes
+// (com 'dark' salvo do v2) também recebam o tema novo.
+const STORAGE_KEY = 'metodo-rec:theme:v3';
 
 export function ThemeProvider({ children }) {
   const [themeKey, setThemeKey] = useState(() => {

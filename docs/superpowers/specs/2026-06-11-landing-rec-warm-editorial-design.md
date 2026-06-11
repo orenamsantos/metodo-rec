@@ -66,3 +66,17 @@ formato em LATAM.
 
 Build Vite + preview local; screenshots mobile (412px) e desktop pro Flavio
 aprovar visualmente ANTES de merge. Branch separado (`feat/landing-warm-editorial`).
+
+## Adendo — Fase 2: tema global (2026-06-11, pedido do Flavio)
+
+Flavio apontou o pulo claro→escuro na transição Landing→Q1. Decisão: levar o
+Warm Editorial pro funil INTEIRO via tokens: o tema `light` de `themes.js` vira
+"Warm Editorial" (papel #FAF7F2 flat, terracota no lugar do dourado, ink-text,
+success=forest #2F5B4F) e `DEFAULT_THEME='light'`; `STORAGE_KEY` v2→v3 pra
+visitante recorrente pegar o default novo. Ajustes fora do token: PrimaryButton
+vira fill chapado radius 12 (era gradiente dourado), BuyButton label/radius
+(gradiente+glow MANTIDOS — elemento de conversão — agora terracota via tokens),
+Offer troca hex champanhe chumbado por token, keyframes glow-pulse-light e
+::selection do Layout re-coloridos. Landing simplificada de volta pra tokens do
+tema (sem full-bleed local). Tema escuro preservado no código (toggle existe).
+Validação: screenshots 412px das 12 telas principais, todas coerentes.

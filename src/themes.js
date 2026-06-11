@@ -1,6 +1,7 @@
 // Dois temas para o funil Método R.E.C.
 // - dark: "Editorial Oscuro" (versão original)
-// - light: "Editorial Luminoso" (premium boutique — creme + champagne)
+// - light: "Warm Editorial" (design system Open Design: papel quente + terracota;
+//   ver docs/superpowers/specs/2026-06-11-landing-rec-warm-editorial-design.md)
 
 const GRAIN_DARK = `data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/><feColorMatrix values='0 0 0 0 0.85 0 0 0 0 0.75 0 0 0 0 0.6 0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>`;
 
@@ -30,25 +31,25 @@ export const themes = {
     },
   },
   light: {
-    name: 'Editorial Luminoso',
+    name: 'Warm Editorial',
     grain: GRAIN_LIGHT,
-    grainOpacity: 0.35,
+    grainOpacity: 0.25,
     grainBlend: 'multiply',
-    background: 'radial-gradient(ellipse at top, #fff8e8 0%, #fbf3e0 50%, #f3e6c8 100%)',
-    metaColor: '#fbf3e0',
+    background: '#FAF7F2',
+    metaColor: '#FAF7F2',
     c: {
-      bg: '#fbf6ec', bgSoft: '#f5ebd7', bgDeep: '#ead8b8', bgWarm: '#fff8e8',
-      gold: '#b89968', goldBright: '#d4b683', goldDeep: '#7a5f3a', goldGlow: '#c9a974',
-      rose: '#c49095', roseDeep: '#9c6a6f',
-      text: '#3a2618', textSoft: '#6f5440', textDim: '#a89580',
-      border: '#ddc9a8', borderSoft: '#ebdac0', borderGold: '#a88a5a',
-      danger: '#a85540', success: '#6a8458',
-      shadow: '#3a2618',
-      shadowBox: '0 8px 28px rgba(58, 38, 24, 0.12), 0 1px 3px rgba(58, 38, 24, 0.06)',
-      shadowPremium: '0 24px 60px rgba(58, 38, 24, 0.18), 0 6px 20px rgba(184, 153, 104, 0.15), 0 0 0 1px rgba(168, 138, 90, 0.15)',
-      accentOnLight: '#7a5f3a',
+      bg: '#FAF7F2', bgSoft: '#F2EDE4', bgDeep: '#E9E1D3', bgWarm: '#FFFFFF',
+      gold: '#C0512F', goldBright: '#D8845F', goldDeep: '#9A3F24', goldGlow: '#CE6B45',
+      rose: '#C49095', roseDeep: '#9C6A6F',
+      text: '#1C1A17', textSoft: '#5D564F', textDim: '#8A817A',
+      border: '#E0D8CA', borderSoft: '#EBE4D8', borderGold: '#C9846B',
+      danger: '#A8442F', success: '#2F5B4F',
+      shadow: '#1C1A17',
+      shadowBox: '0 8px 28px rgba(28, 26, 23, 0.10), 0 1px 3px rgba(28, 26, 23, 0.05)',
+      shadowPremium: '0 24px 60px rgba(28, 26, 23, 0.14), 0 6px 20px rgba(192, 81, 47, 0.10), 0 0 0 1px rgba(192, 81, 47, 0.10)',
+      accentOnLight: '#9A3F24',
     },
   },
 };
 
-export const DEFAULT_THEME = 'dark';
+export const DEFAULT_THEME = 'light';

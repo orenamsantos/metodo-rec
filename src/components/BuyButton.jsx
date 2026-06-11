@@ -9,7 +9,7 @@ export default function BuyButton({ children, onClick, subtitle, href, id, class
     ? `linear-gradient(135deg, ${c.goldDeep} 0%, ${c.gold} 30%, ${c.goldBright} 50%, ${c.gold} 70%, ${c.goldDeep} 100%)`
     : `linear-gradient(135deg, ${c.goldDeep} 0%, ${c.gold} 25%, ${c.goldBright} 50%, ${c.gold} 75%, ${c.goldDeep} 100%)`;
 
-  const textColor = isLight ? '#fffaf0' : c.bgDeep;
+  const textColor = isLight ? c.bg : c.bgDeep;
   const animation = isLight ? 'glow-pulse-light 2.4s ease-in-out infinite' : 'glow-pulse-dark 2.4s ease-in-out infinite';
 
   const baseStyle = {
@@ -27,7 +27,7 @@ export default function BuyButton({ children, onClick, subtitle, href, id, class
     letterSpacing: '0.1em',
     textTransform: 'uppercase',
     cursor: 'pointer',
-    borderRadius: isLight ? 6 : 2,
+    borderRadius: isLight ? 12 : 2,
     transition: 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
     animation,
     transform: hover ? 'translateY(-2px)' : 'translateY(0)',
