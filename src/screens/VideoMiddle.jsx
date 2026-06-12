@@ -1,12 +1,36 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import PrimaryButton from '../components/PrimaryButton';
 import Em from '../components/Em';
 
+// Gate suave (prescrição do Cauã/Théo): o botão de continuar aparece aos 25s,
+// depois que a Dra. Sofía nomeia o Ciclo de Persecución (blocos M1-M3 do
+// vídeo novo de 60s). Antes disso, contador discreto. Sem gate duro: o vídeo
+// inteiro dura 1 minuto e ela pode assistir até o fim e continuar quando quiser.
+const SKIP_DELAY_S = 25;
+
 export default function VideoMiddle({ onNext }) {
   const { c } = useTheme();
   const [videoMountKey] = useState(() => `mid-${Date.now()}`);
+  const [secondsLeft, setSecondsLeft] = useState(SKIP_DELAY_S);
+
+  useEffect(() => {
+    const t = window.setInterval(() => {
+      setSecondsLeft((s) => {
+        if (s <= 1) {
+          window.clearInterval(t);
+          return 0;
+        }
+        return s - 1;
+      });
+    }, 1000);
+    return () => window.clearInterval(t);
+  }, []);
+
+  const unlocked = secondsLeft === 0;
+  const progress = (SKIP_DELAY_S - secondsLeft) / SKIP_DELAY_S;
+
   return (
     <div style={{ paddingTop: 24 }}>
       <FadeIn>
@@ -36,7 +60,7 @@ export default function VideoMiddle({ onNext }) {
         }}>
           <iframe
             key={videoMountKey}
-            src="https://play.tynk.ai/p/64584f35-69ed-4d88-822f-09156159a24e"
+            src="https://play.tynk.ai/p/22ce6312-0c7f-41f9-a9ca-2321e5b3a949"
             title="Video de la especialista · Dra. Sofía Restrepo"
             allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
             allowFullScreen
@@ -53,12 +77,33 @@ export default function VideoMiddle({ onNext }) {
           color: c.textSoft, fontSize: 14, lineHeight: 1.65, textAlign: 'center',
           margin: '0 0 28px', fontStyle: 'italic', fontFamily: "'Fraunces', serif",
         }}>
-          Son 3 minutos. Es donde la Dra. Sofía te muestra por qué nada de lo que intentaste funcionó, y qué va a identificar en tus últimas respuestas.
+          Es un minuto. La Dra. Sofía te muestra por qué nada de lo que intentaste funcionó, y qué va a identificar en tus últimas respuestas.
         </p>
       </FadeIn>
-      <FadeIn delay={0.5}>
-        <PrimaryButton onClick={onNext}>Continuar con mi diagnóstico →</PrimaryButton>
-      </FadeIn>
+      {unlocked ? (
+        <FadeIn>
+          <PrimaryButton onClick={onNext}>Continuar con mi diagnóstico →</PrimaryButton>
+        </FadeIn>
+      ) : (
+        <div aria-live="polite" style={{ textAlign: 'center' }}>
+          <div style={{
+            width: '100%', maxWidth: 380, height: 3, margin: '0 auto 12px',
+            background: c.borderSoft, borderRadius: 999, overflow: 'hidden',
+          }}>
+            <div style={{
+              width: `${Math.round(progress * 100)}%`, height: '100%',
+              background: c.gold, borderRadius: 999,
+              transition: 'width 1s linear',
+            }} />
+          </div>
+          <div style={{
+            fontSize: 13, color: c.textDim, letterSpacing: '0.05em',
+            fontFamily: "'Fraunces', serif", fontStyle: 'italic',
+          }}>
+            Tu diagnóstico continúa en {secondsLeft}s
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -450,7 +450,7 @@ export default function Offer({ bucket, commitment }) {
         }}>
           <iframe
             key={videoMountKey}
-            src="https://play.tynk.ai/p/6310476e-80e4-4769-b08d-c3919eb202f5"
+            src="https://play.tynk.ai/p/044b97da-14f8-4a20-b360-da5b7182e0af"
             title="VSL · Método R.E.C."
             allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
             allowFullScreen
