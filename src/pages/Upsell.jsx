@@ -11,6 +11,10 @@ import { getStepBySlug } from '../lib/steps';
 const HOTMART_UPSELL_URL = 'PLACEHOLDER_HOTMART_UPSELL_URL';
 // TODO: substituir pela URL real do checkout do upsell na Hotmart
 
+// Vídeo da Dra. Sofía (60-75s, clipes U1-U7 do Théo): preencher com o link do
+// player quando o Flavio gerar e subir. Vazio = a página rende sem o slot.
+const UPSELL_VIDEO_URL = '';
+
 export default function Upsell() {
   const { c } = useTheme();
   const navigate = useNavigate();
@@ -36,15 +40,39 @@ export default function Upsell() {
           fontWeight: 400, lineHeight: 1.15, textAlign: 'center',
           margin: '0 0 16px', letterSpacing: '-0.015em',
         }}>
-          Espera, esto solo lo verás <Em>una vez</Em>.
+          El método abre la puerta. <Em>Estas son las palabras para cruzarla.</Em>
         </h1>
       </FadeIn>
+      {UPSELL_VIDEO_URL ? (
+        <FadeIn delay={0.15}>
+          <div style={{
+            position: 'relative', width: '100%', aspectRatio: '9 / 16',
+            maxWidth: 380, margin: '0 auto 10px',
+            background: '#000', border: `1px solid ${c.border}`,
+            borderRadius: 12, overflow: 'hidden',
+          }}>
+            <iframe
+              src={UPSELL_VIDEO_URL}
+              title="Mensaje de la Dra. Sofía · Cartas y Guiones"
+              allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+              allowFullScreen
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0, display: 'block' }}
+            />
+          </div>
+          <p style={{
+            textAlign: 'center', fontSize: 12, color: c.textDim,
+            margin: '0 0 24px', fontStyle: 'italic', fontFamily: "'Fraunces', serif",
+          }}>
+            Son 60 segundos. La Dra. Sofía te explica por qué creó esto después de 14 años de consulta.
+          </p>
+        </FadeIn>
+      ) : null}
       <FadeIn delay={0.2}>
         <p style={{
           textAlign: 'center', fontSize: 16, color: c.textSoft,
           lineHeight: 1.6, marginBottom: 32,
         }}>
-          Tienes el método. Ahora necesitas <strong style={{ color: c.text }}>las palabras exactas</strong> para los momentos críticos.
+          Tu plan de 30 días ya es tuyo. Y el plan funciona: invierte el ciclo y él va a volver a abrirse. Pero justo ahí, en el momento que esperaste durante meses, pasa algo que la Dra. Sofía vio miles de veces: la emoción sube, y tu cerebro pierde acceso a las palabras. Sabes <strong style={{ color: c.text }}>QUÉ hacer</strong>. Te falta saber <strong style={{ color: c.text }}>QUÉ DECIR</strong>. Esto resuelve exactamente eso.
         </p>
       </FadeIn>
       <FadeIn delay={0.3}>
@@ -63,18 +91,18 @@ export default function Upsell() {
             fontFamily: "'Fraunces', serif", fontSize: 24, fontWeight: 500,
             margin: '0 0 16px', letterSpacing: '-0.01em',
           }}>
-            Cartas y Guiones Listos para Usar
+            Las 30 Cartas y Guiones para los Momentos Exactos
           </h2>
           <p style={{ fontSize: 14, color: c.textSoft, lineHeight: 1.65, marginBottom: 20 }}>
-            30 mensajes y guiones de conversación escritos exactamente para los momentos donde no sabes qué decir — o tienes miedo de equivocarte:
+            Cartas escritas, mensajes listos para mandar y guiones de conversación, palabra por palabra, para las situaciones donde más miedo da equivocarse. Cada herramienta viene en 3 versiones (suave, media y firme, tú eliges según la gravedad) y con el protocolo de qué hacer en las 48 horas siguientes. No improvisas nada: abres, eliges tu versión, la usas.
           </p>
           <ul style={{ margin: '0 0 20px', paddingLeft: 18, fontSize: 14, lineHeight: 1.8, color: c.text }}>
-            <li>Qué decirle después de una discusión grave</li>
-            <li>Cómo iniciar una conversación cuando él está distante</li>
-            <li>Mensajes para "reactivar" la conexión por WhatsApp</li>
-            <li>Las palabras exactas si descubres una traición</li>
-            <li>Cómo responder cuando él dice "necesito tiempo"</li>
-            <li>Guiones para reconectar en fechas importantes</li>
+            <li>La carta para cuando él dice "ya no sé si te amo" (la respuesta que salva lo que queda, sin suplicar y sin amenazar)</li>
+            <li>El guion para cuando él se cierra completamente y vive en automático</li>
+            <li>El guion para iniciar una conversación importante sin el "tenemos que hablar" que lo cierra desde la primera palabra</li>
+            <li>El mensaje para mandar después de un día entero sin hablarse, sin drama y sin pedir perdón por algo que no sabes qué fue</li>
+            <li>La carta para cuando descubriste algo sospechoso (antes de acusar, antes de explotar)</li>
+            <li>La carta para reabrir la conversación sobre el sexo, sin presionar y sin pasar vergüenza</li>
           </ul>
           <div style={{
             padding: '12px 14px', background: c.bgSoft,
@@ -84,10 +112,10 @@ export default function Upsell() {
               fontSize: 12, color: c.gold, marginBottom: 4, letterSpacing: '0.05em',
               fontFamily: "'Fraunces', serif", fontStyle: 'italic',
             }}>
-              Por qué importa:
+              Por qué existe este material:
             </div>
             <div style={{ fontSize: 13, color: c.textSoft, lineHeight: 1.55 }}>
-              El 67% de las mujeres que aplican el Método R.E.C. pierden oportunidades por <em style={{ color: c.text }}>no saber qué decir en el momento exacto</em>. Esto resuelve eso.
+              "Durante años, la pregunta más frecuente en mi consulta fue: <em style={{ color: c.text }}>Doctora, ¿usted me puede dar las palabras exactas? Yo entiendo lo que tengo que hacer, pero cuando llega el momento, me quedo sin saber qué decir.</em>" · Dra. Sofía Restrepo. Estas 30 herramientas son su respuesta a esa pregunta.
             </div>
           </div>
           <div style={{ textAlign: 'center', marginBottom: 24 }}>
@@ -95,7 +123,7 @@ export default function Upsell() {
               fontSize: 12, color: c.textSoft, marginBottom: 4,
               fontFamily: "'Fraunces', serif", fontStyle: 'italic',
             }}>
-              Precio normal
+              Son 90 textos listos (30 herramientas, 3 versiones cada una). Una sola sesión para "aprender a comunicarte" cuesta $80.
             </div>
             <div style={{
               fontSize: 18, color: c.textSoft, textDecoration: 'line-through',

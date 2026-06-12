@@ -36,7 +36,7 @@ export default function Downsell() {
           fontWeight: 400, lineHeight: 1.2, textAlign: 'center',
           margin: '0 0 16px', letterSpacing: '-0.015em',
         }}>
-          Entiendo que <Em>$37 no era el momento.</Em>
+          Entiendo. <Em>$37 no era el momento, y está bien.</Em>
         </h1>
       </FadeIn>
       <FadeIn delay={0.2}>
@@ -44,7 +44,7 @@ export default function Downsell() {
           textAlign: 'center', fontSize: 16, color: c.textSoft,
           lineHeight: 1.6, marginBottom: 32,
         }}>
-          Pero antes de irte, hay algo que sí necesitas tener — y a un precio que cualquiera puede permitirse.
+          Entonces quédate solo con lo innegociable: las 7 conversaciones que pueden salvar o hacer retroceder todo lo que vas a construir en estos 30 días.
         </p>
       </FadeIn>
       <FadeIn delay={0.3}>
@@ -66,23 +66,23 @@ export default function Downsell() {
             Los 7 Guiones Críticos
           </h2>
           <p style={{ fontSize: 14, color: c.textSoft, lineHeight: 1.65, marginBottom: 20 }}>
-            De las 30 cartas, separamos las <strong style={{ color: c.text }}>7 más importantes</strong> — las que cubren los momentos donde un error de palabras puede destruir todo lo que construiste.
+            De las 30 herramientas, la Dra. Sofía separó las <strong style={{ color: c.text }}>7 que no pueden esperar</strong>: los puntos de inflexión donde una sola respuesta equivocada deshace meses. Cada una en 3 niveles de intensidad (suave, media y firme, según la gravedad de tu caso). Son <strong style={{ color: c.text }}>21 respuestas exactas</strong>, palabra por palabra.
           </p>
           <ul style={{ margin: '0 0 24px', paddingLeft: 18, fontSize: 14, lineHeight: 1.8, color: c.text }}>
-            <li>Después de una discusión grave</li>
-            <li>Cuando él dice "necesito tiempo"</li>
-            <li>Para reactivar la conexión por WhatsApp</li>
-            <li>Si descubres una traición</li>
-            <li>Cuando él se cierra emocionalmente</li>
-            <li>Para reconectar en fechas importantes</li>
-            <li>El primer mensaje después de los 30 días</li>
+            <li>Iniciar la conversación importante sin que él se cierre (sin "tenemos que hablar")</li>
+            <li>Cuando él te grita: el límite que frena sin escalar</li>
+            <li>Cuando dijo algo que te hirió profundamente</li>
+            <li>Cuando se cierra emocionalmente por completo</li>
+            <li>Cuando dice "ya no sé si te amo" (la carta más importante que vas a escribir)</li>
+            <li>Cuando te toca reconocer tu parte, sin humillarte</li>
+            <li>La declaración honesta que sella la reconstrucción</li>
           </ul>
           <div style={{ textAlign: 'center', marginBottom: 24 }}>
             <div style={{
               fontSize: 12, color: c.textSoft, marginBottom: 4,
               fontFamily: "'Fraunces', serif", fontStyle: 'italic',
             }}>
-              Antes
+              La versión completa era
             </div>
             <div style={{
               fontSize: 17, color: c.textSoft, textDecoration: 'line-through',
@@ -95,7 +95,7 @@ export default function Downsell() {
               fontSize: 11, color: c.rose, marginBottom: 6,
               letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 500,
             }}>
-              Solo aquí, por
+              Solo los 7 críticos, por
             </div>
             <div style={{
               fontFamily: "'Fraunces', serif", fontSize: 60, fontWeight: 400,
@@ -112,7 +112,7 @@ export default function Downsell() {
             id="cta-downsell"
             className="gtm-cta gtm-checkout-downsell"
             onClick={() => { trackPurchaseIntent('downsell-guiones', 19); }}
-            subtitle="Tu última oportunidad de llevarlo"
+            subtitle="Un clic, sin volver a digitar tarjeta"
           >
             Sí, Llevar los 7 Guiones
           </BuyButton>
