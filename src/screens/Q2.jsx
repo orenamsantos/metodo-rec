@@ -4,10 +4,12 @@ import OptionCard from '../components/OptionCard';
 import PrimaryButton from '../components/PrimaryButton';
 import ScreenTitle from '../components/ScreenTitle';
 import Em from '../components/Em';
+import { FEELING_SE_ALEJA } from '../lib/buckets';
 
 const OPTIONS = [
   'Me siento invisible para él',
   'Parecemos dos extraños viviendo bajo el mismo techo',
+  FEELING_SE_ALEJA,
   'Tengo miedo de que se interese por otra',
   'La intimidad prácticamente desapareció',
   'Está siempre en el celular, distante',
@@ -27,7 +29,7 @@ export default function Q2({ sel, onTog, onNext }) {
           color: c.textSoft, fontSize: 13, marginTop: -20, marginBottom: 24,
           fontStyle: 'italic', fontFamily: "'Fraunces', serif",
         }}>
-          Puedes marcar más de una. Sé honesta — nadie más va a verlo.
+          Puedes marcar más de una. Sé honesta. Nadie más va a verlo.
         </p>
       </FadeIn>
       <FadeIn delay={0.25}>

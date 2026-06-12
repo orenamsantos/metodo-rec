@@ -18,6 +18,7 @@ import PriceAnchor from '../screens/PriceAnchor';
 import Offer from '../screens/Offer';
 
 import { STEPS, QUIZ_INTERNAL_MAX_ID, isInternalStep } from '../lib/steps';
+import { computeBucket } from '../lib/buckets';
 import { trackStepChange } from '../lib/tracking';
 import useQuizState from '../hooks/useQuizState';
 import { getQueryParams } from '../lib/queryParams';
@@ -97,6 +98,9 @@ export default function Quiz() {
       feelings: p.feelings.includes(f) ? p.feelings.filter((x) => x !== f) : [...p.feelings, f],
     }));
 
+  // Balde do diagnóstico: derivado das respostas já persistidas (Q2 + Q3).
+  const bucket = computeBucket({ feelings: a.feelings, triedTalking: a.triedTalking });
+
   const showProgress = screen > 0 && screen < 9;
   const BACK_BLOCKED = new Set([0, 9, 12]);
   const canGoBack = !BACK_BLOCKED.has(screen);
@@ -123,9 +127,9 @@ export default function Quiz() {
         />
       )}
       {screen === 9 && <Loading />}
-      {screen === 10 && <Result name={a.name} onNext={goNext} />}
-      {screen === 11 && <PriceAnchor onNext={goNext} />}
-      {screen === 12 && <Offer onBuy={goNext} />}
+      {screen === 10 && <Result name={a.name} bucket={bucket} onNext={goNext} />}
+      {screen === 11 && <PriceAnchor bucket={bucket} onNext={goNext} />}
+      {screen === 12 && <Offer bucket={bucket} commitment={a.commitment} onBuy={goNext} />}
     </>
   );
 }
