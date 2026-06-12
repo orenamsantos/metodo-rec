@@ -27,7 +27,7 @@ function writeOfferSeen(payload) {
 }
 
 const ITEMS = [
-  { title: 'Ebook "Método R.E.C." completo', desc: 'La secuencia exacta que rompe el patrón de distanciamiento, fase por fase, en 30 días. 120 páginas, sin relleno.', value: '$97' },
+  { title: 'Ebook "Método R.E.C." completo', desc: 'La secuencia exacta que invierte el Ciclo de Persecución, fase por fase, en 30 días. 120 páginas, sin relleno.', value: '$97' },
   { title: 'Planner Diario de 30 días', desc: 'Sabes qué hacer cada día sin tener que pensar: abres la página del día y la aplicas.', value: '$47' },
   { title: 'Bonus 1: Guía de Primeros Auxilios Emocionales', desc: 'Qué hacer en las próximas 72 horas si la situación está crítica. Para aplicar hoy mismo.', value: '$27' },
   { title: 'Bonus 2: Mapa de Comunicación de Pareja', desc: 'Los 5 estilos de marido, la frase que abre a cada uno, y las 4 que nunca debes decir.', value: '$19' },
@@ -35,7 +35,7 @@ const ITEMS = [
 ];
 
 const TESTIMONIALS = [
-  { quote: 'En 23 días, mi marido me invitó a cenar fuera por primera vez en más de un año. Lloré.', author: 'Marina S.', meta: 'Casada hace 8 años · Colombia', photo: '/images/retratos/marina-s-colombia-40.png' },
+  { quote: 'En 18 días, mi marido me invitó a cenar fuera por primera vez en más de un año. Lloré.', author: 'Marina S.', meta: 'Casada hace 8 años · Colombia', photo: '/images/retratos/marina-s-colombia-40.png' },
   { quote: 'Estaba a punto de pedir el divorcio. Hoy estamos empezando de nuevo. Y está MEJOR que antes.', author: 'Camila R.', meta: 'Casada hace 11 años · México', photo: '/images/retratos/camila-mexico-47.png' },
   { quote: 'El método es diferente. No es "darle espacio" ni "valorarte". Es algo que nadie habla en otro lado.', author: 'Leticia M.', meta: 'Casada hace 6 años · Argentina', photo: '/images/retratos/leticia-m-argentina-33.png' },
   { quote: 'Llevábamos meses sin tocarnos. Una tarde, después de aplicar la fase 2, mi marido me abrazó por la espalda en la cocina. Sin decir nada. Lloré.', author: 'Carolina', meta: 'Casada hace 9 años · Colombia', photo: '/images/retratos/carolina-colombia-38.png' },

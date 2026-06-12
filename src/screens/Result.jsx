@@ -6,6 +6,9 @@ import { BUCKETS } from '../lib/buckets';
 // Copy literal do laudo do Caio (caio-copy-rec-v2.md, Tela 10).
 // As 3 versões citam a forma do patrón com o nome que a Dra. Sofía fala nos
 // vídeos (ponte de taxonomia). ZONA CRÍTICA segue como guarda-chuva visual.
+// Opção A (videos-produccion-FINAL.md): "Ciclo de Persecución" é o mecanismo
+// guarda-chuva (a dinâmica dos dois); o Bloqueo de X é o lado dela que o
+// alimenta. O box do perfil nomeia o Ciclo pros 3 baldes.
 const COPY = {
   deseo: {
     paragraph: (fn, Strong) => (
@@ -84,7 +87,7 @@ const COPY = {
     goodNews: (Strong) => (
       <>
         El Bloqueo de Confianza parece el más confuso, pero es el más predecible de los
-        tres: el ciclo de alejarse y volver sigue reglas exactas.{' '}
+        tres: el Ciclo de Persecución, alejarse y volver, sigue reglas exactas.{' '}
         <Strong>78% de las mujeres con tu mismo bloqueo</Strong> revierten el cuadro en
         hasta 60 días cuando dejan de reaccionar al ciclo y empiezan a romperlo.
       </>
@@ -97,8 +100,8 @@ const COPY = {
     ],
     transition: (Strong) => (
       <>
-        Existe <Strong>una secuencia específica</Strong> para salir del ciclo de
-        alejarse y volver, y que la próxima vez que él se acerque, se quede. Fue
+        Existe <Strong>una secuencia específica</Strong> para salir del Ciclo de
+        Persecución, y que la próxima vez que él se acerque, se quede. Fue
         diseñada exactamente para tu bloqueo, en la etapa en que estás ahora.
       </>
     ),
@@ -152,9 +155,15 @@ export default function Result({ name, bucket, onNext }) {
           </h2>
           <p style={{
             fontFamily: "'Fraunces', serif", fontStyle: 'italic',
+            color: c.goldBright, fontSize: 15, margin: '0 0 6px',
+          }}>
+            El Ciclo de Persecución ya está activo en tu matrimonio.
+          </p>
+          <p style={{
+            fontFamily: "'Fraunces', serif", fontStyle: 'italic',
             color: c.goldBright, fontSize: 15, margin: 0,
           }}>
-            Tu forma del patrón: <em style={{ color: c.gold }}>{b.label}</em>
+            Lo que lo alimenta de tu lado: <em style={{ color: c.gold }}>{b.label}</em>
           </p>
         </div>
       </FadeIn>
