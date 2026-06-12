@@ -118,7 +118,7 @@ export default function Landing({ onStart }) {
               }}
             />
             <span style={{ fontSize: 12, color: c.textDim, fontFamily: "'Manrope', sans-serif" }}>
-              — Camila R., casada hace 11 años · México
+              Camila R. · casada hace 11 años · México
             </span>
           </div>
         </div>
