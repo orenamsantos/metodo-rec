@@ -1,10 +1,120 @@
 import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import PrimaryButton from '../components/PrimaryButton';
+import { BUCKETS } from '../lib/buckets';
 
-export default function Result({ name, onNext }) {
+// Copy literal do laudo do Caio (caio-copy-rec-v2.md, Tela 10).
+// As 3 versões citam a forma do patrón com o nome que a Dra. Sofía fala nos
+// vídeos (ponte de taxonomia). ZONA CRÍTICA segue como guarda-chuva visual.
+const COPY = {
+  deseo: {
+    paragraph: (fn, Strong) => (
+      <>
+        {fn && `${fn}, `}según lo que marcaste, el deseo se apagó antes que el amor.
+        Se acuestan en la misma cama y hay treinta centímetros que se sienten como un
+        muro. Él está ahí, y a la vez no está. Es lo que la Dra. Sofía llama{' '}
+        <Strong>anestesia emocional</Strong>: el cuerpo deja de reaccionar antes que el
+        corazón. Y cada semana que pasa, ese muro se vuelve un poco más normal.
+      </>
+    ),
+    goodNews: (Strong) => (
+      <>
+        El Bloqueo de Deseo es el que más rápido responde cuando se trabaja en el orden
+        correcto: <Strong>78% de las mujeres con tu mismo bloqueo</Strong> revierten el
+        cuadro en hasta 60 días. Pero es también el que más castiga los intentos a ciegas.
+      </>
+    ),
+    notWorking: [
+      'Insinuarte o provocarlo más (la presión apaga, no enciende)',
+      'Esperar a que él dé el primer paso (la anestesia no se cura sola)',
+      'Sentarlo a "hablar de nosotros" (lo cierra todavía más)',
+      'Resignarte a vivir como compañeros de casa',
+    ],
+    transition: (Strong) => (
+      <>
+        Existe <Strong>una secuencia específica</Strong> para reactivar el deseo de él
+        hacia ti, sin perseguirlo y sin rogarle. Fue diseñada exactamente para tu
+        bloqueo, en la etapa en que estás ahora.
+      </>
+    ),
+  },
+  conexion: {
+    paragraph: (fn, Strong) => (
+      <>
+        {fn && `${fn}, `}según lo que marcaste, ya no es que peleen. Comen en la misma
+        mesa y el silencio pesa más que cualquier pelea. Hablan de los niños, de las
+        cuentas, de la logística. De ustedes dos, nada. Es lo que la Dra. Sofía llama{' '}
+        <Strong>distancia funcional</Strong>: la casa funciona, el matrimonio se apaga.
+        Y lo más peligroso de este bloqueo es que se disfraza de paz.
+      </>
+    ),
+    goodNews: (Strong) => (
+      <>
+        El Bloqueo de Conexión es el más común y el mejor mapeado de los tres:{' '}
+        <Strong>78% de las mujeres con tu mismo bloqueo</Strong> revierten el cuadro en
+        hasta 60 días, cuando actúan sobre el bloqueo y no sobre los síntomas.
+      </>
+    ),
+    notWorking: [
+      'Hablar más (él ya se desconectó de esas conversaciones)',
+      'Planear una cena o un viaje "para reconectar" (cambia el lugar, el patrón viaja con ustedes)',
+      'Darle más espacio (profundiza el silencio)',
+      'Terapia de pareja genérica en esta etapa',
+    ],
+    transition: (Strong) => (
+      <>
+        Existe <Strong>una secuencia específica</Strong> para que vuelvan a ser dos
+        personas que se eligen, no dos socios que administran una casa. Fue diseñada
+        exactamente para tu bloqueo, en la etapa en que estás ahora.
+      </>
+    ),
+  },
+  confianza: {
+    paragraph: (fn, Strong) => (
+      <>
+        {fn && `${fn}, `}según lo que marcaste, hay algo que te desgasta más que la
+        distancia: no saber con qué versión de él vas a amanecer. Un día se acerca y
+        parece que vuelve, al otro se apaga sin explicación. Y tú ya mides cada palabra
+        antes de hablarle. Es lo que la Dra. Sofía llama{' '}
+        <Strong>silencio acumulado</Strong>: todo lo que no se dijeron durante meses se
+        volvió un campo minado. Por eso discuten por tonterías. La tontería es la
+        chispa; la pólvora es lo que llevan callado.
+      </>
+    ),
+    goodNews: (Strong) => (
+      <>
+        El Bloqueo de Confianza parece el más confuso, pero es el más predecible de los
+        tres: el ciclo de alejarse y volver sigue reglas exactas.{' '}
+        <Strong>78% de las mujeres con tu mismo bloqueo</Strong> revierten el cuadro en
+        hasta 60 días cuando dejan de reaccionar al ciclo y empiezan a romperlo.
+      </>
+    ),
+    notWorking: [
+      'Exigir definiciones ("¿todavía me amas?" lo empuja a la defensiva)',
+      'Revisar su celular o buscar señales (alimenta tu miedo, no te da la verdad)',
+      'La conversación definitiva para "aclarar todo de una vez"',
+      'Castigarlo con tu propio silencio cuando él se aleja',
+    ],
+    transition: (Strong) => (
+      <>
+        Existe <Strong>una secuencia específica</Strong> para salir del ciclo de
+        alejarse y volver, y que la próxima vez que él se acerque, se quede. Fue
+        diseñada exactamente para tu bloqueo, en la etapa en que estás ahora.
+      </>
+    ),
+  },
+};
+
+export default function Result({ name, bucket, onNext }) {
   const { c } = useTheme();
   const fn = (name || '').split(' ')[0] || '';
+  const b = bucket && COPY[bucket.id] ? bucket : BUCKETS.conexion;
+  const copy = COPY[b.id];
+
+  const Strong = ({ children }) => (
+    <strong style={{ color: c.gold, fontWeight: 600 }}>{children}</strong>
+  );
+
   return (
     <div style={{ paddingTop: 24 }}>
       <FadeIn>
@@ -27,6 +137,7 @@ export default function Result({ name, onNext }) {
         <div style={{
           padding: '28px 24px', border: `1px solid ${c.gold}`,
           background: `linear-gradient(135deg, ${c.gold}15 0%, ${c.rose}10 100%)`,
+          borderRadius: 12,
           marginBottom: 28,
         }}>
           <div style={{
@@ -43,17 +154,17 @@ export default function Result({ name, onNext }) {
             fontFamily: "'Fraunces', serif", fontStyle: 'italic',
             color: c.goldBright, fontSize: 15, margin: 0,
           }}>
-            Bloqueo de Conexión Emocional
+            Tu forma del patrón: <em style={{ color: c.gold }}>{b.label}</em>
           </p>
         </div>
       </FadeIn>
       <FadeIn delay={0.45}>
         <p style={{ fontSize: 16, lineHeight: 1.7, color: c.text, marginBottom: 20 }}>
-          {fn && `${fn}, `}según tus respuestas, estás en la etapa donde <strong style={{ color: c.gold, fontWeight: 500 }}>la desconexión ya se siente a diario</strong>, pero todavía existe espacio para revertirla — siempre que se actúe sobre el bloqueo correcto.
+          {copy.paragraph(fn, Strong)}
         </p>
       </FadeIn>
       <FadeIn delay={0.55}>
-        <div style={{ padding: 20, background: c.bgSoft, border: `1px solid ${c.borderSoft}`, marginBottom: 20 }}>
+        <div style={{ padding: 20, background: c.bgSoft, border: `1px solid ${c.borderSoft}`, borderRadius: 12, marginBottom: 20 }}>
           <div style={{
             fontFamily: "'Fraunces', serif", fontStyle: 'italic',
             color: c.gold, fontSize: 13, marginBottom: 12, letterSpacing: '0.05em',
@@ -61,14 +172,14 @@ export default function Result({ name, onNext }) {
             La buena noticia
           </div>
           <p style={{ fontSize: 15, lineHeight: 1.65, color: c.text, margin: 0 }}>
-            <strong style={{ color: c.gold, fontWeight: 600 }}>78% de las mujeres en Zona Crítica</strong> logran revertir completamente el cuadro en hasta 60 días — siempre que actúen sobre el bloqueo correcto, y no sobre los síntomas.
+            {copy.goodNews(Strong)}
           </p>
         </div>
       </FadeIn>
       <FadeIn delay={0.65}>
         <div style={{
           padding: 20, background: `${c.danger}10`,
-          border: `1px solid ${c.danger}40`, marginBottom: 28,
+          border: `1px solid ${c.danger}40`, borderRadius: 12, marginBottom: 28,
         }}>
           <div style={{
             fontFamily: "'Fraunces', serif", fontStyle: 'italic',
@@ -77,20 +188,19 @@ export default function Result({ name, onNext }) {
             Lo que NO va a funcionar
           </div>
           <ul style={{ margin: 0, paddingLeft: 18, fontSize: 14, lineHeight: 1.8, color: c.textSoft }}>
-            <li>Hablar más (él ya se desconectó de la conversación)</li>
-            <li>Darle más espacio (aumenta la distancia)</li>
-            <li>Terapia de pareja genérica en esta etapa</li>
-            <li>Fingir que todo está bien y esperar que pase</li>
+            {copy.notWorking.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
           </ul>
         </div>
       </FadeIn>
       <FadeIn delay={0.75}>
         <p style={{ fontSize: 16, lineHeight: 1.7, color: c.text, marginBottom: 28 }}>
-          Existe <strong style={{ color: c.gold, fontWeight: 500 }}>un camino específico</strong> para mujeres en tu perfil. No es genérico, no es "común". Fue diseñado exactamente para la etapa en que estás ahora.
+          {copy.transition(Strong)}
         </p>
       </FadeIn>
       <FadeIn delay={0.85}>
-        <PrimaryButton onClick={onNext}>Ver mi Plan Personalizado →</PrimaryButton>
+        <PrimaryButton onClick={onNext}>Ver mi Plan para el {b.label} →</PrimaryButton>
       </FadeIn>
     </div>
   );
