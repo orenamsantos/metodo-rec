@@ -4,10 +4,10 @@ import FadeIn from '../components/FadeIn';
 import Em from '../components/Em';
 
 const STEPS = [
-  'Analizando patrones emocionales',
+  'Leyendo tus respuestas, una por una',
   'Comparando con 12.847 casos reales',
-  'Identificando tu bloqueo específico',
-  'Generando plan personalizado',
+  'Identificando cuál de los 3 bloqueos es el tuyo',
+  'Preparando tu plan para ese bloqueo',
 ];
 
 export default function Loading() {

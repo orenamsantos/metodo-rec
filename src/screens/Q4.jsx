@@ -16,7 +16,7 @@ export default function Q4({ v, onSel }) {
   return (
     <div style={{ paddingTop: 24 }}>
       <ScreenTitle eyebrow="Pregunta 04">
-        Si existiera un <Em>camino comprobado</Em> para reavivar tu matrimonio en 30 días con aplicación diaria, ¿te comprometerías?
+        Si hubiera un camino claro, paso a paso, para romper ese patrón y que <Em>él vuelva a buscarte a ti</Em>, ¿lo seguirías?
       </ScreenTitle>
       <FadeIn delay={0.2}>
         <div>

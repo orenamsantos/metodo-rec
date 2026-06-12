@@ -21,12 +21,12 @@ export default function Capture({ a, setName, setPhone, onSubmit }) {
 
   return (
     <div style={{ paddingTop: 24 }}>
-      <ScreenTitle eyebrow="Casi listo">
-        Todo listo. Vamos a preparar tu <Em>diagnóstico personalizado.</Em>
+      <ScreenTitle eyebrow="Último paso">
+        Listo. Tu resultado <Em>ya está calculado.</Em>
       </ScreenTitle>
       <FadeIn delay={0.2}>
         <p style={{ color: c.textSoft, marginTop: -16, marginBottom: 32, fontSize: 15, lineHeight: 1.6 }}>
-          Te vamos a enviar tu resultado completo y un contenido de regalo, incluso si no haces nada más después de esto. Sin spam, prometido.
+          Dime tu nombre y tu WhatsApp y lo ves ahora mismo. Te enviamos el resultado completo y un regalo, incluso si no haces nada más después de esto. Sin spam, prometido.
         </p>
       </FadeIn>
       <FadeIn delay={0.3}>
@@ -45,20 +45,20 @@ export default function Capture({ a, setName, setPhone, onSubmit }) {
           <label style={labelStyle}>WhatsApp (con código de país)</label>
           <input
             type="tel" value={a.phone} onChange={(e) => setPhone(e.target.value)}
-            placeholder="+52 1 55 0000 0000" style={inputStyle}
+            placeholder="+ código de país · tu número" style={inputStyle}
             onFocus={(e) => (e.target.style.borderColor = c.gold)}
             onBlur={(e) => (e.target.style.borderColor = c.border)}
           />
         </div>
       </FadeIn>
       <FadeIn delay={0.5}>
-        <PrimaryButton onClick={onSubmit} disabled={!valid}>Ver mi Diagnóstico →</PrimaryButton>
+        <PrimaryButton onClick={onSubmit} disabled={!valid}>Ver mi resultado ahora →</PrimaryButton>
         <div style={{
           marginTop: 18, padding: '12px 14px', background: c.bgSoft,
           border: `1px solid ${c.borderSoft}`, fontSize: 11, color: c.textDim,
           lineHeight: 1.6, textAlign: 'center',
         }}>
-          🔒 Tus datos están protegidos. No compartimos con nadie.
+          🔒 Tus datos están protegidos. No los compartimos con nadie.
         </div>
       </FadeIn>
     </div>

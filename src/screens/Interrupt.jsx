@@ -16,7 +16,7 @@ export default function Interrupt({ onNext }) {
           fontSize: 56, color: c.gold, marginBottom: 30, lineHeight: 1,
         }}>·</div>
       </FadeIn>
-      <FadeIn delay={0.3}>
+      <FadeIn delay={0.15}>
         <h2 style={{
           fontFamily: "'Fraunces', serif", fontSize: 'clamp(26px, 5.5vw, 34px)',
           fontWeight: 400, lineHeight: 1.25, margin: '0 0 28px',
@@ -25,20 +25,20 @@ export default function Interrupt({ onNext }) {
           Respira.<br /><Em>No estás sola.</Em>
         </h2>
       </FadeIn>
-      <FadeIn delay={0.7}>
+      <FadeIn delay={0.3}>
         <p style={{ color: c.textSoft, fontSize: 16, lineHeight: 1.7, maxWidth: 440, margin: '0 0 40px' }}>
-          <strong style={{ color: c.text, fontWeight: 500 }}>73,4%</strong> de las mujeres que responden como tú sienten que necesitan hacer algo antes de que sea tarde — y la mayoría no sabe por dónde empezar.
+          <strong style={{ color: c.text, fontWeight: 500 }}>73,4%</strong> de las mujeres que marcan lo mismo que tú sienten que necesitan hacer algo antes de que sea tarde. Y casi ninguna sabe qué es ese algo, porque nadie les mostró el patrón que tienen enfrente.
         </p>
       </FadeIn>
-      <FadeIn delay={1.0}>
+      <FadeIn delay={0.4}>
         <p style={{
           fontFamily: "'Fraunces', serif", fontStyle: 'italic',
           color: c.gold, fontSize: 17, marginBottom: 36,
         }}>
-          Vamos a descubrirlo juntas.
+          Las próximas preguntas lo van a poner frente a tus ojos.
         </p>
       </FadeIn>
-      <FadeIn delay={1.3}>
+      <FadeIn delay={0.5}>
         <div style={{ width: '100%', maxWidth: 380 }}>
           <PrimaryButton onClick={onNext}>Continuar →</PrimaryButton>
         </div>

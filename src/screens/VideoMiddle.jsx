@@ -14,7 +14,7 @@ export default function VideoMiddle({ onNext }) {
           fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase',
           color: c.gold, fontWeight: 500, marginBottom: 16,
         }}>
-          Pausa · Mensaje de la Especialista
+          Pausa · Mensaje de la Dra. Sofía
         </div>
       </FadeIn>
       <FadeIn delay={0.1}>
@@ -37,7 +37,7 @@ export default function VideoMiddle({ onNext }) {
           <iframe
             key={videoMountKey}
             src="https://play.tynk.ai/p/64584f35-69ed-4d88-822f-09156159a24e"
-            title="Video de la especialista — Dra. Sofía Restrepo"
+            title="Video de la especialista · Dra. Sofía Restrepo"
             allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
             allowFullScreen
             style={{
@@ -53,12 +53,11 @@ export default function VideoMiddle({ onNext }) {
           color: c.textSoft, fontSize: 14, lineHeight: 1.65, textAlign: 'center',
           margin: '0 0 28px', fontStyle: 'italic', fontFamily: "'Fraunces', serif",
         }}>
-          Mira el video completo antes de seguir.<br />
-          Lo que viene solo tiene sentido después de esto.
+          Son 3 minutos. Es donde la Dra. Sofía te muestra por qué nada de lo que intentaste funcionó, y qué va a identificar en tus últimas respuestas.
         </p>
       </FadeIn>
       <FadeIn delay={0.5}>
-        <PrimaryButton onClick={onNext}>Ya lo Vi, Continuar →</PrimaryButton>
+        <PrimaryButton onClick={onNext}>Continuar con mi diagnóstico →</PrimaryButton>
       </FadeIn>
     </div>
   );

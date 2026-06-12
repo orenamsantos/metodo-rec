@@ -5,7 +5,7 @@ import ScreenTitle from '../components/ScreenTitle';
 import Em from '../components/Em';
 
 const OPTIONS = [
-  'Sí, muchas veces — y él no cambia',
+  'Sí, muchas veces, y él no cambia',
   'Sí, pero solo empeora cuando hablo',
   'Tengo miedo de su reacción',
   'Todavía no he tenido el valor',

@@ -4,14 +4,14 @@ import PrimaryButton from '../components/PrimaryButton';
 import Em from '../components/Em';
 
 const COSTS = [
-  { label: '1 sesión de terapia de pareja', value: '$80 — $150' },
-  { label: '6 meses de terapia (mínimo recomendado)', value: '$1.200 — $2.400' },
-  { label: 'Curso online tradicional con coach', value: '$200 — $500' },
-  { label: 'Costo promedio de un divorcio', value: '$5.000 — $15.000' },
+  { label: '1 sesión de terapia de pareja', value: '$80 a $150' },
+  { label: '6 meses de terapia (mínimo recomendado)', value: '$1.200 a $2.400' },
+  { label: 'Curso online tradicional con coach', value: '$200 a $500' },
+  { label: 'Costo promedio de un divorcio', value: '$5.000 a $15.000' },
   { label: 'Impacto emocional en los hijos', value: 'Incalculable' },
 ];
 
-export default function PriceAnchor({ onNext }) {
+export default function PriceAnchor({ bucket, onNext }) {
   const { c } = useTheme();
   return (
     <div style={{ paddingTop: 24 }}>
@@ -34,7 +34,7 @@ export default function PriceAnchor({ onNext }) {
       </FadeIn>
       <FadeIn delay={0.2}>
         <p style={{ fontSize: 16, lineHeight: 1.7, color: c.textSoft, marginBottom: 32 }}>
-          No es retórica. Es matemática. Esto es lo que la mayoría termina pagando — después de meses esperando que las cosas mejoren solas:
+          No es retórica. Es matemática. Esto es lo que la mayoría termina pagando después de meses esperando que las cosas mejoren solas:
         </p>
       </FadeIn>
       <FadeIn delay={0.3}>
@@ -66,19 +66,19 @@ export default function PriceAnchor({ onNext }) {
             fontFamily: "'Fraunces', serif", fontStyle: 'italic',
             fontSize: 16, color: c.text, lineHeight: 1.6, marginBottom: 12,
           }}>
-            "El costo de esperar siempre es más alto que el costo de actuar."
+            "Cada mes que esperas, el muro entre ustedes se vuelve un poco más normal. Y lo normal es lo más difícil de cambiar."
           </div>
           <div style={{
             fontSize: 11, color: c.textDim,
             letterSpacing: '0.1em', textTransform: 'uppercase',
           }}>
-            — Centro R.E.C.
+            · Dra. Sofía Restrepo
           </div>
         </div>
       </FadeIn>
       <FadeIn delay={0.55}>
         <p style={{ fontSize: 16, lineHeight: 1.7, color: c.text, marginBottom: 28 }}>
-          El Método R.E.C. existe para que ese no sea tu camino. Por una <strong style={{ color: c.gold, fontWeight: 500 }}>fracción del costo de una sola sesión de terapia</strong>, vas a recibir el sistema completo — diseñado específicamente para mujeres en <Em>Zona Crítica</Em>.
+          El Método R.E.C. existe para que ese no sea tu camino. Por <strong style={{ color: c.gold, fontWeight: 500 }}>menos de lo que cuesta una sola sesión de terapia</strong>, recibes el sistema completo, diseñado para tu {bucket ? <Em>{bucket.label}</Em> : 'bloqueo exacto'}.
         </p>
       </FadeIn>
       <FadeIn delay={0.7}>
