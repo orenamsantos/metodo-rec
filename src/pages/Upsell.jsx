@@ -11,9 +11,9 @@ import { getStepBySlug } from '../lib/steps';
 const HOTMART_UPSELL_URL = 'PLACEHOLDER_HOTMART_UPSELL_URL';
 // TODO: substituir pela URL real do checkout do upsell na Hotmart
 
-// Vídeo da Dra. Sofía (60-75s, clipes U1-U7 do Théo): preencher com o link do
-// player quando o Flavio gerar e subir. Vazio = a página rende sem o slot.
-const UPSELL_VIDEO_URL = '';
+// Vídeo da Dra. Sofía (68s, clipes U1-U7 do Théo, editado no remotion-studio).
+// Master no Tynk. Vazio = a página rende sem o slot.
+const UPSELL_VIDEO_URL = 'https://play.tynk.ai/p/6b3baf0f-df5c-497c-a49a-8381e9793305';
 
 export default function Upsell() {
   const { c } = useTheme();
