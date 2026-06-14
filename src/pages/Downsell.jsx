@@ -1,24 +1,17 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
-import BuyButton from '../components/BuyButton';
-import GhostButton from '../components/GhostButton';
+import HotmartFunnelWidget from '../components/HotmartFunnelWidget';
 import Em from '../components/Em';
-import { trackStepChange, trackPurchaseIntent } from '../lib/tracking';
+import { trackStepChange } from '../lib/tracking';
 import { getStepBySlug } from '../lib/steps';
-
-const HOTMART_DOWNSELL_URL = 'PLACEHOLDER_HOTMART_DOWNSELL_URL';
-// TODO: substituir pela URL real do checkout do downsell na Hotmart
 
 export default function Downsell() {
   const { c } = useTheme();
-  const navigate = useNavigate();
   useEffect(() => {
     const step = getStepBySlug('downsell-guiones');
     if (step) trackStepChange(step.slug, step.id);
   }, []);
-  const goAcceso = () => navigate('/acceso');
 
   return (
     <div style={{ paddingTop: 24 }}>
@@ -107,19 +100,8 @@ export default function Downsell() {
               $19
             </div>
           </div>
-          <BuyButton
-            href={HOTMART_DOWNSELL_URL}
-            id="cta-downsell"
-            className="gtm-cta gtm-checkout-downsell"
-            onClick={() => { trackPurchaseIntent('downsell-guiones', 19); }}
-            subtitle="Un clic, sin volver a digitar tarjeta"
-          >
-            Sí, Llevar los 7 Guiones
-          </BuyButton>
+          <HotmartFunnelWidget purchaseSlug="downsell-guiones" purchaseValue={19} />
         </div>
-      </FadeIn>
-      <FadeIn delay={0.4}>
-        <GhostButton onClick={goAcceso}>No gracias, ir directo a mi acceso</GhostButton>
       </FadeIn>
     </div>
   );

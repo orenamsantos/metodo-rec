@@ -1,15 +1,10 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
-import BuyButton from '../components/BuyButton';
-import GhostButton from '../components/GhostButton';
+import HotmartFunnelWidget from '../components/HotmartFunnelWidget';
 import Em from '../components/Em';
-import { trackStepChange, trackPurchaseIntent } from '../lib/tracking';
+import { trackStepChange } from '../lib/tracking';
 import { getStepBySlug } from '../lib/steps';
-
-const HOTMART_UPSELL_URL = 'PLACEHOLDER_HOTMART_UPSELL_URL';
-// TODO: substituir pela URL real do checkout do upsell na Hotmart
 
 // Vídeo da Dra. Sofía (68s, clipes U1-U7 do Théo, editado no remotion-studio).
 // Master no Tynk. Vazio = a página rende sem o slot.
@@ -17,12 +12,10 @@ const UPSELL_VIDEO_URL = 'https://play.tynk.ai/p/6b3baf0f-df5c-497c-a49a-8381e97
 
 export default function Upsell() {
   const { c } = useTheme();
-  const navigate = useNavigate();
   useEffect(() => {
     const step = getStepBySlug('upsell-cartas');
     if (step) trackStepChange(step.slug, step.id);
   }, []);
-  const onDecline = () => navigate('/downsell');
 
   return (
     <div style={{ paddingTop: 24 }}>
@@ -148,19 +141,8 @@ export default function Upsell() {
               $37
             </div>
           </div>
-          <BuyButton
-            href={HOTMART_UPSELL_URL}
-            id="cta-upsell"
-            className="gtm-cta gtm-checkout-upsell"
-            onClick={() => { trackPurchaseIntent('upsell-cartas', 37); }}
-            subtitle="Agregar con un clic, sin volver a digitar tarjeta"
-          >
-            Sí, Agregar a Mi Pedido
-          </BuyButton>
+          <HotmartFunnelWidget purchaseSlug="upsell-cartas" purchaseValue={37} />
         </div>
-      </FadeIn>
-      <FadeIn delay={0.4}>
-        <GhostButton onClick={onDecline}>No gracias, continuar sin esto</GhostButton>
       </FadeIn>
       <FadeIn delay={0.5}>
         <div style={{
