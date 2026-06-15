@@ -148,10 +148,10 @@ export default function Landing({ onStart }) {
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             {[
               { src: '/images/retratos/carolina-colombia-38.png', alt: 'Carolina, Colombia' },
-              { src: '/images/retratos/marina-argentina-42.png', alt: 'Marina, Argentina' },
-              { src: '/images/retratos/leticia-brasil-35.png', alt: 'Letícia, Brasil' },
-              { src: '/images/retratos/alejandra-peru-49.png', alt: 'Alejandra, Peru' },
-              { src: '/images/retratos/patricia-chile-44.png', alt: 'Patrícia, Chile' },
+              { src: '/images/retratos/marina-argentina-42.png', alt: 'Marina, Colombia' },
+              { src: '/images/retratos/leticia-brasil-35.png', alt: 'Leticia, Argentina' },
+              { src: '/images/retratos/alejandra-peru-49.png', alt: 'Alejandra, Perú' },
+              { src: '/images/retratos/patricia-chile-44.png', alt: 'Patricia, Chile' },
             ].map((p, i) => (
               <img
                 key={p.src}

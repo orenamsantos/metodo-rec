@@ -377,7 +377,7 @@ export default function Offer({ bucket, commitment }) {
             fontSize: 13, color: c.textSoft, marginBottom: 10,
             fontStyle: 'italic', fontFamily: "'Fraunces', serif",
           }}>
-            o en 12 cuotas sin interés
+            o en 12 cuotas sin intereses
           </div>
 
           <div style={{
@@ -600,7 +600,7 @@ export default function Offer({ bucket, commitment }) {
           color: goldText, fontSize: 13, letterSpacing: '0.15em', textTransform: 'uppercase',
           marginBottom: 16, textAlign: 'center',
         }}>
-          Quien ya aplicó
+          Quienes ya aplicaron
         </div>
         <div style={{ marginBottom: 36 }}>
           {TESTIMONIALS.map((t, i) => (
