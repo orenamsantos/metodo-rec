@@ -6,7 +6,7 @@ import Em from '../components/Em';
 import { trackPurchaseIntent, trackOfferView } from '../lib/tracking';
 import { getQueryParams } from '../lib/queryParams';
 
-const HOTMART_CHECKOUT_URL = 'https://pay.hotmart.com/L105883495E';
+const HOTMART_CHECKOUT_URL = 'https://pay.hotmart.com/L105883495E?checkoutMode=10';
 
 const OFFER_SEEN_KEY = 'metodorec_offer_seen';
 
