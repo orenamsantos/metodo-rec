@@ -1,3 +1,4 @@
+import { motion } from 'motion/react';
 import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
 import PrimaryButton from '../components/PrimaryButton';
@@ -136,37 +137,55 @@ export default function Result({ name, bucket, onNext }) {
           {fn ? `${fn}, tu` : 'Tu'} diagnóstico está listo.
         </h1>
       </FadeIn>
-      <FadeIn delay={0.3}>
-        <div style={{
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
+        animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+        transition={{ delay: 0.4, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        style={{
           padding: '28px 24px', border: `1px solid ${c.gold}`,
           background: `linear-gradient(135deg, ${c.gold}15 0%, ${c.rose}10 100%)`,
           borderRadius: 12,
           marginBottom: 28,
-        }}>
-          <div style={{
-            fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase',
-            color: c.gold, marginBottom: 10, fontWeight: 600,
-          }}>Tu Perfil</div>
-          <h2 style={{
+        }}
+      >
+        <div style={{
+          fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase',
+          color: c.gold, marginBottom: 10, fontWeight: 600,
+        }}>Tu Perfil</div>
+        <motion.h2
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9, duration: 0.5 }}
+          style={{
             fontFamily: "'Fraunces', serif", fontSize: 28, fontWeight: 400,
             margin: '0 0 8px', color: c.text, letterSpacing: '-0.01em',
-          }}>
-            ZONA CRÍTICA
-          </h2>
-          <p style={{
+          }}
+        >
+          ZONA CRÍTICA
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.15, duration: 0.5 }}
+          style={{
             fontFamily: "'Fraunces', serif", fontStyle: 'italic',
             color: c.goldBright, fontSize: 15, margin: '0 0 6px',
-          }}>
-            El Ciclo de Persecución ya está activo en tu matrimonio.
-          </p>
-          <p style={{
+          }}
+        >
+          El Ciclo de Persecución ya está activo en tu matrimonio.
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.35, duration: 0.5 }}
+          style={{
             fontFamily: "'Fraunces', serif", fontStyle: 'italic',
             color: c.goldBright, fontSize: 15, margin: 0,
-          }}>
-            Lo que lo alimenta de tu lado: <em style={{ color: c.gold }}>{b.label}</em>
-          </p>
-        </div>
-      </FadeIn>
+          }}
+        >
+          Lo que lo alimenta de tu lado: <em style={{ color: c.gold }}>{b.label}</em>
+        </motion.p>
+      </motion.div>
       <FadeIn delay={0.45}>
         <p style={{ fontSize: 16, lineHeight: 1.7, color: c.text, marginBottom: 20 }}>
           {copy.paragraph(fn, Strong)}
