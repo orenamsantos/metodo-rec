@@ -7,7 +7,7 @@ import Landing from '../screens/Landing';
 
 import { STEPS, QUIZ_INTERNAL_MAX_ID, isInternalStep } from '../lib/steps';
 import { computeBucket } from '../lib/buckets';
-import { trackStepChange } from '../lib/tracking';
+import { trackStepChange, trackLead } from '../lib/tracking';
 import useQuizState from '../hooks/useQuizState';
 import { getQueryParams } from '../lib/queryParams';
 
@@ -149,7 +149,7 @@ export default function Quiz() {
             a={a}
             setName={(v) => set('name', v)}
             setPhone={(v) => set('phone', v)}
-            onSubmit={goNext}
+            onSubmit={() => { trackLead({ name: a.name, phone: a.phone }); goNext(); }}
           />
         )}
         {screen === 9 && <Loading />}
