@@ -112,8 +112,11 @@ export default function Quiz() {
   }, [screen]);
 
   const handleBack = () => {
-    window.dispatchEvent(new CustomEvent('quiz:back', { detail: { from: screen, to: Math.max(0, screen - 1) } }));
-    goBack();
+    // Q1 foi fundida na Landing (screen 0); voltar do Q2 (screen 2) cai na
+    // Landing, não na Q1 órfã (screen 1).
+    const to = screen === 2 ? 0 : Math.max(0, screen - 1);
+    window.dispatchEvent(new CustomEvent('quiz:back', { detail: { from: screen, to } }));
+    if (screen === 2) jumpTo(0); else goBack();
   };
 
   const set = (k, v) => setA((p) => ({ ...p, [k]: v }));
@@ -136,7 +139,12 @@ export default function Quiz() {
       {showProgress && <ProgressBar step={stepFromScreen(screen)} />}
 
       <Suspense fallback={null}>
-        {screen === 0 && <Landing onStart={goNext} />}
+        {screen === 0 && (
+          <Landing
+            value={a.timeAgo}
+            onSelectTime={(v) => { set('timeAgo', v); trackStepChange('q1-tiempo-cambio', 1); jumpTo(2); }}
+          />
+        )}
         {screen === 1 && <Q1 v={a.timeAgo} onSel={(v) => { set('timeAgo', v); goNext(); }} />}
         {screen === 2 && <Q2 sel={a.feelings} onTog={toggle} onNext={goNext} />}
         {screen === 3 && <Interrupt onNext={goNext} />}

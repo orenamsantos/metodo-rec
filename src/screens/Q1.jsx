@@ -16,7 +16,7 @@ export default function Q1({ v, onSel }) {
   return (
     <div style={{ paddingTop: 24 }}>
       <ScreenTitle eyebrow="Pregunta 01">
-        ¿Hace cuánto sientes que <Em>algo cambió</Em> entre ustedes?
+        ¿Hace cuánto sientes que <Em>se aleja y vuelve</Em>?
       </ScreenTitle>
       <FadeIn delay={0.2}>
         <div>

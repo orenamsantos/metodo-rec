@@ -1,44 +1,20 @@
 import { useTheme } from '../ThemeContext';
 import FadeIn from '../components/FadeIn';
+import OptionCard from '../components/OptionCard';
+import Em from '../components/Em';
 
-// CTA da landing: sentence case (diferente do PrimaryButton, que é uppercase),
-// fill chapado terracota conforme o mockup aprovado do Warm Editorial.
-function CtaButton({ onClick, children }) {
-  const { c } = useTheme();
-  return (
-    <button
-      onClick={onClick}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-1px)';
-        e.currentTarget.style.boxShadow = '0 10px 24px rgba(192, 81, 47, 0.32)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.boxShadow = '0 6px 16px rgba(192, 81, 47, 0.24)';
-      }}
-      style={{
-        width: '100%',
-        minHeight: 56,
-        padding: '18px 24px',
-        background: c.gold,
-        color: c.bg,
-        border: 'none',
-        borderRadius: 12,
-        fontFamily: "'Manrope', sans-serif",
-        fontSize: 16,
-        fontWeight: 700,
-        letterSpacing: '0.02em',
-        cursor: 'pointer',
-        transition: 'all 0.3s ease',
-        boxShadow: '0 6px 16px rgba(192, 81, 47, 0.24)',
-      }}
-    >
-      {children}
-    </button>
-  );
-}
+// Fusão landing + Q1: a entrada já é a primeira pergunta. Tira o portão do
+// "Empezar" (onde vazava ~83%) e converte leitura em resposta. As opções de
+// tempo são as MESMAS da Q1 original (timeAgo intacto); só a pergunta foi
+// reescrita pro gancho emocional do "se aleja y vuelve".
+const OPTIONS = [
+  'Menos de 3 meses',
+  'Entre 3 meses y 1 año',
+  'Más de 1 año',
+  'Sinceramente, ya no recuerdo cómo era antes',
+];
 
-export default function Landing({ onStart }) {
+export default function Landing({ value, onSelectTime }) {
   const { c } = useTheme();
   return (
     <div style={{ paddingTop: 40 }}>
@@ -74,7 +50,7 @@ export default function Landing({ onStart }) {
       <FadeIn delay={0.2}>
         <p style={{
           textAlign: 'center', color: c.textSoft, fontSize: 16, lineHeight: 1.6,
-          maxWidth: 480, margin: '0 auto 34px',
+          maxWidth: 480, margin: '0 auto 30px',
         }}>
           Si tu esposo <strong style={{ color: c.text, fontWeight: 600 }}>se aleja y vuelve</strong>,
           no es frialdad: es un patrón con nombre. Descubre cuál de los{' '}
@@ -89,7 +65,7 @@ export default function Landing({ onStart }) {
           background: c.bgWarm,
           border: `1px solid ${c.borderSoft}`,
           borderRadius: 14,
-          marginBottom: 28,
+          marginBottom: 30,
           boxShadow: c.shadowBox,
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
@@ -125,9 +101,32 @@ export default function Landing({ onStart }) {
       </FadeIn>
 
       <FadeIn delay={0.4}>
-        <CtaButton onClick={onStart}>Quiero entender qué pasa →</CtaButton>
+        <div style={{
+          fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
+          color: c.gold, fontWeight: 600, marginBottom: 12, textAlign: 'center',
+        }}>
+          Pregunta 01
+        </div>
+        <h2 style={{
+          fontFamily: "'Fraunces', serif", fontSize: 'clamp(20px, 5vw, 26px)',
+          fontWeight: 400, lineHeight: 1.25, textAlign: 'center',
+          margin: '0 0 22px', color: c.text,
+        }}>
+          ¿Hace cuánto sientes que <Em>se aleja y vuelve</Em>?
+        </h2>
+        <div>
+          {OPTIONS.map((opt, i) => (
+            <OptionCard
+              key={opt}
+              idx={i + 1}
+              label={opt}
+              sel={value === opt}
+              onClick={() => onSelectTime(opt)}
+            />
+          ))}
+        </div>
         <p style={{
-          textAlign: 'center', fontSize: 11, color: c.textDim, marginTop: 14,
+          textAlign: 'center', fontSize: 11, color: c.textDim, marginTop: 16,
           letterSpacing: '0.05em',
         }}>
           90 segundos · 100% confidencial · Sin registro inicial
