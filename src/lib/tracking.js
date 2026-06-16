@@ -53,6 +53,29 @@ export function trackOfferView({ isFirstView, viewCount, delaySkipped }) {
   });
 }
 
+// Dispara no submit da captura. Empurra o lead (telefone + nome) pro dataLayer
+// pra alimentar o advanced matching server-side: vira o evento Lead e enriquece
+// o InitiateCheckout (a pessoa já deu nome+WhatsApp antes do checkout).
+// PII vai CRUA pro dataLayer/server (first-party); o server hasheia (SHA-256)
+// antes de mandar pra Meta. Telefone normalizado pra só dígitos, preservando o
+// código de país que a pessoa digitou (LATAM: México 52, Colômbia 57, etc.).
+export function trackLead({ name, phone } = {}) {
+  const digits = (phone || '').replace(/\D/g, '');
+  const parts = (name || '').trim().split(/\s+/).filter(Boolean);
+  const fn = parts[0] || '';
+  const ln = parts.slice(1).join(' ') || '';
+
+  window.dispatchEvent(new CustomEvent('quiz:lead', { detail: { hasPhone: digits.length >= 8 } }));
+
+  pushToDataLayer({
+    event: 'generate_lead',
+    event_id: generateEventId(),
+    lead_phone: digits,
+    lead_fn: fn,
+    lead_ln: ln,
+  });
+}
+
 export function trackPurchaseIntent(productSlug, priceUSD) {
   window.dispatchEvent(new CustomEvent('quiz:purchase_intent', {
     detail: { productSlug, priceUSD },
