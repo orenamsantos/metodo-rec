@@ -1,27 +1,45 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ProgressBar from '../components/ProgressBar';
 import BackButton from '../components/BackButton';
 import Landing from '../screens/Landing';
-import Q1 from '../screens/Q1';
-import Q2 from '../screens/Q2';
-import Interrupt from '../screens/Interrupt';
-import Q3 from '../screens/Q3';
-import VideoMiddle from '../screens/VideoMiddle';
-import Q4 from '../screens/Q4';
-import Q5 from '../screens/Q5';
-import Capture from '../screens/Capture';
-import Loading from '../screens/Loading';
-import Result from '../screens/Result';
-import PriceAnchor from '../screens/PriceAnchor';
-import Offer from '../screens/Offer';
 
 import { STEPS, QUIZ_INTERNAL_MAX_ID, isInternalStep } from '../lib/steps';
 import { computeBucket } from '../lib/buckets';
 import { trackStepChange } from '../lib/tracking';
 import useQuizState from '../hooks/useQuizState';
 import { getQueryParams } from '../lib/queryParams';
+
+// Só a Landing entra no bundle inicial (é a primeira pintura / LCP). As demais
+// telas carregam sob demanda (code-splitting) e são pré-buscadas no idle logo
+// após o load, então quando a pessoa avança o chunk já está em cache (sem flash).
+const loaders = {
+  Q1: () => import('../screens/Q1'),
+  Q2: () => import('../screens/Q2'),
+  Interrupt: () => import('../screens/Interrupt'),
+  Q3: () => import('../screens/Q3'),
+  VideoMiddle: () => import('../screens/VideoMiddle'),
+  Q4: () => import('../screens/Q4'),
+  Q5: () => import('../screens/Q5'),
+  Capture: () => import('../screens/Capture'),
+  Loading: () => import('../screens/Loading'),
+  Result: () => import('../screens/Result'),
+  PriceAnchor: () => import('../screens/PriceAnchor'),
+  Offer: () => import('../screens/Offer'),
+};
+const Q1 = lazy(loaders.Q1);
+const Q2 = lazy(loaders.Q2);
+const Interrupt = lazy(loaders.Interrupt);
+const Q3 = lazy(loaders.Q3);
+const VideoMiddle = lazy(loaders.VideoMiddle);
+const Q4 = lazy(loaders.Q4);
+const Q5 = lazy(loaders.Q5);
+const Capture = lazy(loaders.Capture);
+const Loading = lazy(loaders.Loading);
+const Result = lazy(loaders.Result);
+const PriceAnchor = lazy(loaders.PriceAnchor);
+const Offer = lazy(loaders.Offer);
 
 function stepFromScreen(s) {
   if (s === 0) return 0;
@@ -54,6 +72,13 @@ export default function Quiz() {
   const hashSlug = readSlugFromHash();
   const { step: forcedSlug } = getQueryParams();
   const { screen, setScreen, a, setA, goNext, goBack, jumpTo, reset } = useQuizState({ forcedSlug, hashSlug });
+
+  // Pré-busca todas as telas seguintes no idle (chunk pronto antes do clique).
+  useEffect(() => {
+    const idle = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 300));
+    const id = idle(() => { Object.values(loaders).forEach((fn) => fn()); });
+    return () => (window.cancelIdleCallback || window.clearTimeout)(id);
+  }, []);
 
   useEffect(() => {
     const onJump = (e) => {
@@ -110,26 +135,28 @@ export default function Quiz() {
       {canGoBack && <BackButton onClick={handleBack} />}
       {showProgress && <ProgressBar step={stepFromScreen(screen)} />}
 
-      {screen === 0 && <Landing onStart={goNext} />}
-      {screen === 1 && <Q1 v={a.timeAgo} onSel={(v) => { set('timeAgo', v); goNext(); }} />}
-      {screen === 2 && <Q2 sel={a.feelings} onTog={toggle} onNext={goNext} />}
-      {screen === 3 && <Interrupt onNext={goNext} />}
-      {screen === 4 && <Q3 v={a.triedTalking} onSel={(v) => { set('triedTalking', v); goNext(); }} />}
-      {screen === 5 && <VideoMiddle onNext={goNext} />}
-      {screen === 6 && <Q4 v={a.commitment} onSel={(v) => { set('commitment', v); goNext(); }} />}
-      {screen === 7 && <Q5 v={a.timeLeft} onSel={(v) => { set('timeLeft', v); goNext(); }} />}
-      {screen === 8 && (
-        <Capture
-          a={a}
-          setName={(v) => set('name', v)}
-          setPhone={(v) => set('phone', v)}
-          onSubmit={goNext}
-        />
-      )}
-      {screen === 9 && <Loading />}
-      {screen === 10 && <Result name={a.name} bucket={bucket} onNext={goNext} />}
-      {screen === 11 && <PriceAnchor bucket={bucket} onNext={goNext} />}
-      {screen === 12 && <Offer bucket={bucket} commitment={a.commitment} onBuy={goNext} />}
+      <Suspense fallback={null}>
+        {screen === 0 && <Landing onStart={goNext} />}
+        {screen === 1 && <Q1 v={a.timeAgo} onSel={(v) => { set('timeAgo', v); goNext(); }} />}
+        {screen === 2 && <Q2 sel={a.feelings} onTog={toggle} onNext={goNext} />}
+        {screen === 3 && <Interrupt onNext={goNext} />}
+        {screen === 4 && <Q3 v={a.triedTalking} onSel={(v) => { set('triedTalking', v); goNext(); }} />}
+        {screen === 5 && <VideoMiddle onNext={goNext} />}
+        {screen === 6 && <Q4 v={a.commitment} onSel={(v) => { set('commitment', v); goNext(); }} />}
+        {screen === 7 && <Q5 v={a.timeLeft} onSel={(v) => { set('timeLeft', v); goNext(); }} />}
+        {screen === 8 && (
+          <Capture
+            a={a}
+            setName={(v) => set('name', v)}
+            setPhone={(v) => set('phone', v)}
+            onSubmit={goNext}
+          />
+        )}
+        {screen === 9 && <Loading />}
+        {screen === 10 && <Result name={a.name} bucket={bucket} onNext={goNext} />}
+        {screen === 11 && <PriceAnchor bucket={bucket} onNext={goNext} />}
+        {screen === 12 && <Offer bucket={bucket} commitment={a.commitment} onBuy={goNext} />}
+      </Suspense>
     </>
   );
 }
