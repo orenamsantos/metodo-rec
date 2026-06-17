@@ -72,11 +72,27 @@ export default function Quiz() {
   const { step: forcedSlug } = getQueryParams();
   const { screen, setScreen, a, setA, goNext, goBack, jumpTo, reset } = useQuizState({ forcedSlug, hashSlug });
 
-  // Pré-busca todas as telas seguintes no idle (chunk pronto antes do clique).
+  // Pré-busca os chunks das telas seguintes SEM competir com o LCP: só dispara
+  // após o evento 'load' (o LCP já pintou) e no idle. A próxima tela real depois
+  // da Landing (Q2, pós-resposta da 1ª pergunta) entra primeiro; o resto em
+  // seguida. Antes isso rodava logo após montar e ocupava a thread entre o
+  // FCP e o LCP, atrasando a pintura da headline.
   useEffect(() => {
-    const idle = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 300));
-    const id = idle(() => { Object.values(loaders).forEach((fn) => fn()); });
-    return () => (window.cancelIdleCallback || window.clearTimeout)(id);
+    let idleId;
+    const prefetch = () => {
+      const idle = window.requestIdleCallback || ((cb) => window.setTimeout(cb, 1));
+      loaders.Q2();
+      idleId = idle(() => { Object.values(loaders).forEach((fn) => fn()); });
+    };
+    if (document.readyState === 'complete') {
+      const t = setTimeout(prefetch, 200);
+      return () => clearTimeout(t);
+    }
+    window.addEventListener('load', prefetch, { once: true });
+    return () => {
+      window.removeEventListener('load', prefetch);
+      if (idleId) (window.cancelIdleCallback || window.clearTimeout)(idleId);
+    };
   }, []);
 
   useEffect(() => {
