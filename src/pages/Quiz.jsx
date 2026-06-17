@@ -7,7 +7,7 @@ import Landing from '../screens/Landing';
 
 import { STEPS, QUIZ_INTERNAL_MAX_ID, isInternalStep } from '../lib/steps';
 import { computeBucket } from '../lib/buckets';
-import { trackStepChange, trackLead } from '../lib/tracking';
+import { trackStepChange } from '../lib/tracking';
 import useQuizState from '../hooks/useQuizState';
 import { getQueryParams } from '../lib/queryParams';
 
@@ -22,7 +22,8 @@ const loaders = {
   VideoMiddle: () => import('../screens/VideoMiddle'),
   Q4: () => import('../screens/Q4'),
   Q5: () => import('../screens/Q5'),
-  Capture: () => import('../screens/Capture'),
+  // Captura de lead removida do fluxo (gate sangrava ~34%). O componente
+  // Capture.jsx segue no repo para reativar fácil se voltarmos a pedir o lead.
   Loading: () => import('../screens/Loading'),
   Result: () => import('../screens/Result'),
   PriceAnchor: () => import('../screens/PriceAnchor'),
@@ -35,7 +36,6 @@ const Q3 = lazy(loaders.Q3);
 const VideoMiddle = lazy(loaders.VideoMiddle);
 const Q4 = lazy(loaders.Q4);
 const Q5 = lazy(loaders.Q5);
-const Capture = lazy(loaders.Capture);
 const Loading = lazy(loaders.Loading);
 const Result = lazy(loaders.Result);
 const PriceAnchor = lazy(loaders.PriceAnchor);
@@ -48,8 +48,7 @@ function stepFromScreen(s) {
   if (s === 4 || s === 5) return 3;
   if (s === 6) return 4;
   if (s === 7) return 5;
-  if (s === 8) return 6;
-  return 7;
+  return 5;
 }
 
 function readSlugFromHash() {
@@ -101,10 +100,17 @@ export default function Quiz() {
     }
   }, [screen, setScreen]);
 
+  // Captura de lead removida: qualquer um que caia na tela 8 (localStorage de
+  // sessão antiga ou deep-link #/captura-lead) segue direto pro Loading.
+  useEffect(() => {
+    if (screen === 8) setScreen(9);
+  }, [screen, setScreen]);
+
   useEffect(() => { window.scrollTo(0, 0); }, [screen]);
 
   useEffect(() => {
     if (screen > QUIZ_INTERNAL_MAX_ID) return;
+    if (screen === 8) return; // tela de captura removida do fluxo
     const step = STEPS[screen];
     if (!step) return;
     writeSlugToHash(step.slug);
@@ -136,7 +142,7 @@ export default function Quiz() {
   return (
     <>
       {canGoBack && <BackButton onClick={handleBack} />}
-      {showProgress && <ProgressBar step={stepFromScreen(screen)} />}
+      {showProgress && <ProgressBar step={stepFromScreen(screen)} total={5} />}
 
       <Suspense fallback={null}>
         {screen === 0 && (
@@ -151,15 +157,7 @@ export default function Quiz() {
         {screen === 4 && <Q3 v={a.triedTalking} onSel={(v) => { set('triedTalking', v); goNext(); }} />}
         {screen === 5 && <VideoMiddle onNext={goNext} />}
         {screen === 6 && <Q4 v={a.commitment} onSel={(v) => { set('commitment', v); goNext(); }} />}
-        {screen === 7 && <Q5 v={a.timeLeft} onSel={(v) => { set('timeLeft', v); goNext(); }} />}
-        {screen === 8 && (
-          <Capture
-            a={a}
-            setName={(v) => set('name', v)}
-            setPhone={(v) => set('phone', v)}
-            onSubmit={() => { trackLead({ name: a.name, phone: a.phone }); goNext(); }}
-          />
-        )}
+        {screen === 7 && <Q5 v={a.timeLeft} onSel={(v) => { set('timeLeft', v); jumpTo(9); }} />}
         {screen === 9 && <Loading />}
         {screen === 10 && <Result name={a.name} bucket={bucket} onNext={goNext} />}
         {screen === 11 && <PriceAnchor bucket={bucket} onNext={goNext} />}
