@@ -237,7 +237,7 @@ export default function Offer({ bucket, commitment }) {
   }, []);
 
   const stack = ITEMS.reduce((sum, it) => sum + parseInt(it.value.replace(/\D/g, ''), 10), 0);
-  const price = 27;
+  const price = 17;
 
   const showCommitmentEcho = COMMITMENT_YES.has(commitment);
 
@@ -414,7 +414,7 @@ export default function Offer({ bucket, commitment }) {
               href={HOTMART_CHECKOUT_URL}
               id="cta-checkout-frontend"
               className="gtm-cta gtm-checkout-frontend"
-              onClick={() => { trackPurchaseIntent('oferta-vsl', 27); }}
+              onClick={() => { trackPurchaseIntent('oferta-vsl', 17); }}
               subtitle="Acceso inmediato · Sin compromiso"
             >
               Acceder al Método
@@ -750,7 +750,7 @@ export default function Offer({ bucket, commitment }) {
             href={HOTMART_CHECKOUT_URL}
             id="cta-checkout-frontend-sticky"
             className="gtm-cta gtm-checkout-frontend"
-            onClick={() => { trackPurchaseIntent('oferta-vsl', 27); }}
+            onClick={() => { trackPurchaseIntent('oferta-vsl', 17); }}
             style={{
               flex: 1,
               display: 'block',

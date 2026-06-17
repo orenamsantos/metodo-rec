@@ -97,10 +97,10 @@ export default function Downsell() {
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
               filter: `drop-shadow(0 2px 10px ${c.rose}40)`,
             }}>
-              $19
+              $9
             </div>
           </div>
-          <HotmartFunnelWidget purchaseSlug="downsell-guiones" purchaseValue={19} />
+          <HotmartFunnelWidget purchaseSlug="downsell-guiones" purchaseValue={9} />
         </div>
       </FadeIn>
     </div>
