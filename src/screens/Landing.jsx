@@ -18,46 +18,42 @@ export default function Landing({ value, onSelectTime }) {
   const { c } = useTheme();
   return (
     <div style={{ paddingTop: 40 }}>
-      <FadeIn>
-        <div style={{
-          fontSize: 11, letterSpacing: '0.32em', textTransform: 'uppercase',
-          color: c.gold, fontWeight: 600, marginBottom: 14, textAlign: 'center',
-        }}>
-          Método R.E.C. · Diagnóstico
-        </div>
-      </FadeIn>
+      {/* Herói acima da dobra SEM fade: o LCP é a headline, e o fadeUp começa
+          em opacity:0 — o navegador não conta o LCP enquanto o texto está
+          invisível, então a entrada animada atrasava o LCP (e causava o flake
+          NO_LCP). Render imediato aqui; o resto da página segue com FadeIn. */}
+      <div style={{
+        fontSize: 11, letterSpacing: '0.32em', textTransform: 'uppercase',
+        color: c.gold, fontWeight: 600, marginBottom: 14, textAlign: 'center',
+      }}>
+        Método R.E.C. · Diagnóstico
+      </div>
 
-      <FadeIn delay={0.05}>
-        <div style={{
-          fontFamily: "'Fraunces', serif", fontStyle: 'italic',
-          fontSize: 13, color: c.textDim, textAlign: 'center', marginBottom: 26,
-        }}>
-          Por la Dra. Sofía Restrepo · Terapeuta de pareja
-        </div>
-      </FadeIn>
+      <div style={{
+        fontFamily: "'Fraunces', serif", fontStyle: 'italic',
+        fontSize: 13, color: c.textDim, textAlign: 'center', marginBottom: 26,
+      }}>
+        Por la Dra. Sofía Restrepo · Terapeuta de pareja
+      </div>
 
-      <FadeIn delay={0.1}>
-        <h1 style={{
-          fontFamily: "'Fraunces', serif", fontSize: 'clamp(31px, 7vw, 44px)',
-          fontWeight: 400, lineHeight: 1.12, textAlign: 'center',
-          margin: '0 0 22px', letterSpacing: '-0.015em', color: c.text,
-        }}>
-          Él no se está alejando.<br />
-          Está <em style={{ color: c.gold }}>probando</em> si todavía le importas.
-        </h1>
-      </FadeIn>
+      <h1 style={{
+        fontFamily: "'Fraunces', serif", fontSize: 'clamp(31px, 7vw, 44px)',
+        fontWeight: 400, lineHeight: 1.12, textAlign: 'center',
+        margin: '0 0 22px', letterSpacing: '-0.015em', color: c.text,
+      }}>
+        Él no se está alejando.<br />
+        Está <em style={{ color: c.gold }}>probando</em> si todavía le importas.
+      </h1>
 
-      <FadeIn delay={0.2}>
-        <p style={{
-          textAlign: 'center', color: c.textSoft, fontSize: 16, lineHeight: 1.6,
-          maxWidth: 480, margin: '0 auto 30px',
-        }}>
-          Si tu esposo <strong style={{ color: c.text, fontWeight: 600 }}>se aleja y vuelve</strong>,
-          no es frialdad: es un patrón con nombre. Descubre cuál de los{' '}
-          <strong style={{ color: c.text, fontWeight: 600 }}>3 patrones</strong> domina tu
-          matrimonio y la probabilidad real de revertirlo, en 90 segundos.
-        </p>
-      </FadeIn>
+      <p style={{
+        textAlign: 'center', color: c.textSoft, fontSize: 16, lineHeight: 1.6,
+        maxWidth: 480, margin: '0 auto 30px',
+      }}>
+        Si tu esposo <strong style={{ color: c.text, fontWeight: 600 }}>se aleja y vuelve</strong>,
+        no es frialdad: es un patrón con nombre. Descubre cuál de los{' '}
+        <strong style={{ color: c.text, fontWeight: 600 }}>3 patrones</strong> domina tu
+        matrimonio y la probabilidad real de revertirlo, en 90 segundos.
+      </p>
 
       <FadeIn delay={0.3}>
         <div style={{
